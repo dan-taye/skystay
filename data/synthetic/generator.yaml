@@ -1,0 +1,140 @@
+# Synthetic data generator config (committed). `skystay data` regenerates
+# data/synthetic/generated/ deterministically from this file with seed 42.
+# Scales are ROUND ARBITRARY numbers chosen for plausibility of shape, not
+# calibrated to Abu Dhabi (see SOURCES.md). Nothing here is real data.
+
+seed: 42
+start: 2019-01-01
+end: 2025-12-01
+
+aircraft_seats:          # typical single-class-equivalent seat counts (synthetic)
+  A320: 168
+  A321: 196
+  B787-9: 290
+  A350-1000: 360
+  B777-300ER: 380
+
+carriers:
+  HC: Home network carrier
+  HL: Home low-cost carrier
+  FC: Foreign carrier
+
+# Seasonal shapes (month 1..12), multiplicative, applied by region profile.
+shapes:
+  leisure:   [1.10, 1.08, 1.04, 1.00, 0.92, 0.86, 0.88, 0.88, 0.94, 1.02, 1.08, 1.14]
+  vfr:       [0.96, 0.92, 0.96, 0.98, 0.98, 1.04, 1.12, 1.10, 0.96, 0.96, 0.98, 1.06]
+region_profile:
+  GCC: vfr
+  MEN: vfr
+  SAS: vfr
+  SEA: vfr
+  SSA: vfr
+  WEU: leisure
+  EEU: leisure
+  EAS: leisure
+  NAM: leisure
+  OCE: leisure
+  LAT: leisure
+  UAE: leisure
+  OTH: leisure
+
+# Abu Dhabi seasonality profile published with the pack (synthetic stand-in)
+seasonality_index: [1.18, 1.14, 1.10, 1.00, 0.86, 0.76, 0.80, 0.80, 0.90, 1.04, 1.14, 1.28]
+
+hubs: [GB, DE, SG, US, QA]
+
+# Origins: lf = mean load factor, tr = transfer share at Abu Dhabi,
+# res = returning-resident share of terminating passengers (not observable).
+# routes: [airport, carrier, aircraft, weekly_freq, start (optional), end (optional)]
+origins:
+  SA: {lf: 0.74, tr: 0.15, res: 0.35, routes: [[RUH, HC, A321, 21], [JED, HC, A321, 14], [DMM, HL, A320, 14]]}
+  OM: {lf: 0.70, tr: 0.20, res: 0.30, routes: [[MCT, HC, A320, 14], [MCT, HL, A320, 7]]}
+  KW: {lf: 0.75, tr: 0.18, res: 0.30, routes: [[KWI, HC, A321, 14]]}
+  QA: {lf: 0.68, tr: 0.25, res: 0.25, routes: [[DOH, FC, A320, 14]]}
+  EG: {lf: 0.82, tr: 0.20, res: 0.55, routes: [[CAI, HC, A321, 14], [CAI, HL, A320, 14]]}
+  JO: {lf: 0.78, tr: 0.25, res: 0.40, routes: [[AMM, HC, A320, 14]]}
+  MA: {lf: 0.75, tr: 0.35, res: 0.30, routes: [[CMN, HC, B787-9, 4, null, 2021-12-01]]}
+  GB: {lf: 0.85, tr: 0.55, res: 0.20, routes: [[LHR, HC, B787-9, 21], [LHR, FC, A350-1000, 7], [MAN, HC, B787-9, 7]]}
+  DE: {lf: 0.82, tr: 0.50, res: 0.10, routes: [[FRA, HC, B787-9, 7], [FRA, FC, A350-1000, 7], [MUC, HC, B787-9, 7]]}
+  FR: {lf: 0.83, tr: 0.45, res: 0.10, routes: [[CDG, HC, B787-9, 14]]}
+  IT: {lf: 0.80, tr: 0.40, res: 0.08, routes: [[FCO, HC, B787-9, 7], [MXP, HC, B787-9, 7]]}
+  RU: {lf: 0.86, tr: 0.25, res: 0.05, routes: [[SVO, HC, A321, 7], [SVO, FC, A321, 7]]}
+  IN: {lf: 0.86, tr: 0.35, res: 0.65, routes: [[BOM, HC, A321, 21], [BOM, HL, A320, 14], [DEL, HC, B787-9, 14], [DEL, FC, A320, 7], [COK, HC, A320, 14], [COK, HL, A320, 14]]}
+  PK: {lf: 0.85, tr: 0.30, res: 0.70, routes: [[KHI, HC, A320, 14], [LHE, HC, A320, 14], [ISB, FC, A320, 7]]}
+  LK: {lf: 0.80, tr: 0.45, res: 0.40, routes: [[CMB, HC, A320, 14]]}
+  CN: {lf: 0.80, tr: 0.40, res: 0.15, routes: [[PEK, HC, B787-9, 7], [PVG, HC, B787-9, 7]]}
+  JP: {lf: 0.78, tr: 0.55, res: 0.05, routes: [[NRT, HC, B787-9, 7, 2023-04-01]]}
+  PH: {lf: 0.88, tr: 0.20, res: 0.60, routes: [[MNL, HC, B787-9, 14], [MNL, FC, A321, 7]]}
+  TH: {lf: 0.82, tr: 0.45, res: 0.15, routes: [[BKK, HC, B787-9, 14]]}
+  SG: {lf: 0.80, tr: 0.55, res: 0.10, routes: [[SIN, HC, B787-9, 7], [SIN, FC, A350-1000, 7]]}
+  US: {lf: 0.84, tr: 0.40, res: 0.15, routes: [[JFK, HC, B777-300ER, 7], [ORD, HC, B787-9, 4]]}
+  AU: {lf: 0.83, tr: 0.60, res: 0.10, routes: [[SYD, HC, B787-9, 7], [MEL, HC, B787-9, 7]]}
+  KE: {lf: 0.75, tr: 0.45, res: 0.25, routes: [[NBO, HC, B787-9, 7, 2022-10-01]]}
+  NG: {lf: 0.70, tr: 0.40, res: 0.30, routes: [[LOS, HC, B787-9, 4, null, 2023-06-01]]}
+  BR: {lf: 0.78, tr: 0.55, res: 0.05, routes: [[GRU, HC, B787-9, 4, 2021-07-01]]}
+
+# Hotel side. cap = share of air visitors (of that nationality) who stay in a
+# hotel; cap_amp = amplitude of its seasonal swing; alos = nights per guest;
+# base = non-air guests per month (domestic, land arrivals, other UAE gateways).
+nationalities:
+  SA: {cap: 0.62, cap_amp: 0.12, alos: 2.4, base: 18000}
+  OM: {cap: 0.58, cap_amp: 0.12, alos: 2.2, base: 9000}
+  KW: {cap: 0.66, cap_amp: 0.12, alos: 2.6, base: 2500}
+  QA: {cap: 0.60, cap_amp: 0.10, alos: 2.3, base: 2500}
+  EG: {cap: 0.40, cap_amp: 0.08, alos: 3.0, base: 2500}
+  JO: {cap: 0.48, cap_amp: 0.08, alos: 2.8, base: 1800}
+  MA: {cap: 0.55, cap_amp: 0.08, alos: 3.2, base: 900}
+  GB: {cap: 0.88, cap_amp: 0.14, alos: 4.2, base: 6000}
+  DE: {cap: 0.90, cap_amp: 0.15, alos: 4.6, base: 3000}
+  FR: {cap: 0.88, cap_amp: 0.14, alos: 4.0, base: 2000}
+  IT: {cap: 0.90, cap_amp: 0.14, alos: 3.8, base: 1500}
+  RU: {cap: 0.93, cap_amp: 0.12, alos: 5.0, base: 4000}
+  IN: {cap: 0.42, cap_amp: 0.10, alos: 2.7, base: 6000}
+  PK: {cap: 0.35, cap_amp: 0.08, alos: 2.9, base: 1800}
+  LK: {cap: 0.45, cap_amp: 0.08, alos: 2.6, base: 800}
+  CN: {cap: 0.92, cap_amp: 0.12, alos: 2.9, base: 3500}
+  JP: {cap: 0.94, cap_amp: 0.12, alos: 3.1, base: 1200}
+  PH: {cap: 0.38, cap_amp: 0.08, alos: 2.5, base: 1500}
+  TH: {cap: 0.80, cap_amp: 0.10, alos: 3.0, base: 1000}
+  SG: {cap: 0.85, cap_amp: 0.10, alos: 2.8, base: 1000}
+  US: {cap: 0.90, cap_amp: 0.12, alos: 3.6, base: 3000}
+  AU: {cap: 0.90, cap_amp: 0.12, alos: 3.4, base: 1000}
+  KE: {cap: 0.60, cap_amp: 0.08, alos: 3.0, base: 600}
+  NG: {cap: 0.62, cap_amp: 0.08, alos: 3.4, base: 700}
+  BR: {cap: 0.92, cap_amp: 0.12, alos: 3.8, base: 500}
+  CA: {cap: 0.90, cap_amp: 0.12, alos: 3.7, base: 1500}
+  ZA: {cap: 0.86, cap_amp: 0.10, alos: 3.5, base: 1200}
+  AE: {cap: 0.0, cap_amp: 0.0, alos: 1.9, base: 40000}
+  OTHER: {cap: 0.75, cap_amp: 0.10, alos: 3.2, base: 6000}
+
+# Bridge (origin -> nationality) construction
+bridge:
+  diag_nonhub: [0.80, 0.92]     # uniform range for B[o,o] on point-to-point origins
+  diag_hub: [0.55, 0.70]
+  other_share: 0.04             # B[o, OTHER] for every origin
+  hub_targets: [US, CA, ZA, AU, IN, JP, NG, KE, BR, GB, DE, FR, CN]
+
+uplifts:
+  holiday_capture: 0.45         # capture x (1 + 0.45 * holiday-day fraction of the month)
+  event_capture: 0.60           # capture and base x (1 + 0.60 * event-day fraction)
+  base_trend_per_year: 0.02
+  growth_per_year: [0.00, 0.08] # per-route weekly-frequency growth, uniform range
+  freq_step_prob: 0.35          # chance of a +/- frequency step at each IATA season change
+
+capacity_shock: {origins: [IN, PK, LK], start: 2021-05-01, end: 2021-07-01, multiplier: 0.5}
+upgauge: {origin: IN, airport: BOM, carrier: HC, from: A321, to: B787-9, start: 2024-03-01}
+
+noise:
+  lf_sd: 0.025
+  tr_sd: 0.04
+  pax_route_sd: 0.01
+  guests_sd: 0.05
+  nights_sd: 0.03
+
+defects:
+  drop_hotel_rows: [[2020-08-01, KW], [2022-02-01, TH], [2023-11-01, BR]]
+  drop_pax_rows: [[2021-03-01, CMB]]
+  duplicate_hotel_rows: [[2024-05-01, GB]]
+  overfull_pax_rows: [[2022-12-01, MNL, 1.08]]   # pax/seats > 1 to exercise LF clipping
+
+rooms: {start: 33000, growth_per_year: 0.025, guests_per_room: 1.6}

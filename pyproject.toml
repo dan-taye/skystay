@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skystay"
+version = "0.1.0"
+description = "Flight-to-hotel demand scenario simulator for Abu Dhabi tourism planning"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary" }
+dependencies = [
+  "pandas==3.0.6",
+  "numpy==2.5.3",
+  "scipy==1.18.1",
+  "duckdb==1.5.6",
+  "pyarrow==25.0.1",
+  "statsmodels==0.15.0",
+  "lightgbm==4.7.0",
+  "shap==0.52.0",
+  "SALib==1.6.0",
+  "pydantic==2.14.0",
+  "PyYAML==6.0.3",
+  "streamlit==1.65.0",
+  "plotly==7.1.0",
+  "playwright==1.63.0",
+  "pillow==12.3.0",
+  "Jinja2==3.1.6",
+  "imageio-ffmpeg==0.6.0",
+  "openpyxl==3.1.5",
+  "pytest==9.1.1",
+  "ruff==0.16.10",
+]
+
+[project.scripts]
+skystay = "skystay.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+skystay = ["deck/templates/*", "app/assets/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "B008"]

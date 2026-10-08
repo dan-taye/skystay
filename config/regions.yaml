@@ -1,0 +1,82 @@
+# Single source of truth for market keys (ISO 3166 alpha-2) and regions.
+# Used for: country-name reconciliation (aliases), L1 regional aggregation,
+# plausible origin->nationality pairs for the L2 bridge, and cold-start borrowing.
+# Region codes are not ISO codes; they are project-defined.
+
+regions:
+  GCC: GCC
+  MEN: Rest of MENA
+  WEU: Western Europe
+  EEU: Eastern Europe & CIS
+  SAS: South Asia
+  EAS: East Asia
+  SEA: Southeast Asia
+  NAM: North America
+  SSA: Sub-Saharan Africa
+  OCE: Oceania
+  LAT: Latin America
+  UAE: UAE domestic
+  OTH: Other / unspecified
+
+countries:
+  # GCC
+  - {iso2: SA, name: Saudi Arabia, region: GCC, aliases: [KSA, Kingdom of Saudi Arabia]}
+  - {iso2: OM, name: Oman, region: GCC, aliases: [Sultanate of Oman]}
+  - {iso2: KW, name: Kuwait, region: GCC, aliases: []}
+  - {iso2: QA, name: Qatar, region: GCC, aliases: []}
+  - {iso2: BH, name: Bahrain, region: GCC, aliases: []}
+  # Rest of MENA
+  - {iso2: EG, name: Egypt, region: MEN, aliases: [Arab Republic of Egypt]}
+  - {iso2: JO, name: Jordan, region: MEN, aliases: []}
+  - {iso2: MA, name: Morocco, region: MEN, aliases: []}
+  - {iso2: LB, name: Lebanon, region: MEN, aliases: []}
+  - {iso2: TN, name: Tunisia, region: MEN, aliases: []}
+  - {iso2: TR, name: Turkey, region: MEN, aliases: [Turkiye, Türkiye]}
+  # Western Europe
+  - {iso2: GB, name: United Kingdom, region: WEU, aliases: [UK, U.K., Great Britain, Britain]}
+  - {iso2: DE, name: Germany, region: WEU, aliases: []}
+  - {iso2: FR, name: France, region: WEU, aliases: []}
+  - {iso2: IT, name: Italy, region: WEU, aliases: []}
+  - {iso2: ES, name: Spain, region: WEU, aliases: []}
+  - {iso2: NL, name: Netherlands, region: WEU, aliases: [The Netherlands, Holland]}
+  - {iso2: CH, name: Switzerland, region: WEU, aliases: []}
+  # Eastern Europe & CIS
+  - {iso2: RU, name: Russia, region: EEU, aliases: [Russian Federation]}
+  - {iso2: KZ, name: Kazakhstan, region: EEU, aliases: []}
+  - {iso2: PL, name: Poland, region: EEU, aliases: []}
+  - {iso2: UZ, name: Uzbekistan, region: EEU, aliases: []}
+  # South Asia
+  - {iso2: IN, name: India, region: SAS, aliases: []}
+  - {iso2: PK, name: Pakistan, region: SAS, aliases: []}
+  - {iso2: LK, name: Sri Lanka, region: SAS, aliases: []}
+  - {iso2: BD, name: Bangladesh, region: SAS, aliases: []}
+  - {iso2: NP, name: Nepal, region: SAS, aliases: []}
+  # East Asia
+  - {iso2: CN, name: China, region: EAS, aliases: ["China, People's Republic of", PRC]}
+  - {iso2: JP, name: Japan, region: EAS, aliases: []}
+  - {iso2: KR, name: South Korea, region: EAS, aliases: ["Korea, Republic of", Republic of Korea]}
+  # Southeast Asia
+  - {iso2: PH, name: Philippines, region: SEA, aliases: [The Philippines]}
+  - {iso2: TH, name: Thailand, region: SEA, aliases: []}
+  - {iso2: SG, name: Singapore, region: SEA, aliases: []}
+  - {iso2: MY, name: Malaysia, region: SEA, aliases: []}
+  - {iso2: ID, name: Indonesia, region: SEA, aliases: []}
+  - {iso2: VN, name: Vietnam, region: SEA, aliases: [Viet Nam]}
+  # North America
+  - {iso2: US, name: United States, region: NAM, aliases: [USA, U.S.A., United States of America]}
+  - {iso2: CA, name: Canada, region: NAM, aliases: []}
+  # Oceania
+  - {iso2: AU, name: Australia, region: OCE, aliases: []}
+  - {iso2: NZ, name: New Zealand, region: OCE, aliases: []}
+  # Sub-Saharan Africa
+  - {iso2: KE, name: Kenya, region: SSA, aliases: []}
+  - {iso2: NG, name: Nigeria, region: SSA, aliases: []}
+  - {iso2: ZA, name: South Africa, region: SSA, aliases: []}
+  - {iso2: ET, name: Ethiopia, region: SSA, aliases: []}
+  # Latin America
+  - {iso2: BR, name: Brazil, region: LAT, aliases: []}
+  - {iso2: MX, name: Mexico, region: LAT, aliases: []}
+  - {iso2: AR, name: Argentina, region: LAT, aliases: []}
+  # Hotel-side special keys
+  - {iso2: AE, name: United Arab Emirates, region: UAE, aliases: [UAE, Emirati, UAE Nationals, Domestic]}
+  - {iso2: OTHER, name: Other nationalities, region: OTH, aliases: [Others, Other, Rest of World, Unspecified]}

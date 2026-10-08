@@ -1,0 +1,12 @@
+# Project identity (edit as needed).
+# Empty fields are rendered as [TEAM TO CONFIRM] in the deck, video and README.
+team_name: ""
+members:
+  - name: ""
+    role: ""
+  - name: ""
+    role: ""
+  - name: ""
+    role: ""
+university: American University of Ras Al Khaimah
+product_name: SkyStay   # working name; change freely, it is read from config

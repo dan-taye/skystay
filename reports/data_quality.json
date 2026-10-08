@@ -1,0 +1,451 @@
+{
+  "data_mode": "synthetic",
+  "adapters": [
+    {
+      "dataset": "flight_schedule",
+      "source": "flight_schedule.csv",
+      "rows_in": 110848,
+      "rows_out": 3744,
+      "notes": [
+        "aggregated 110,848 schedule rows to 3,744 route-months"
+      ]
+    },
+    {
+      "dataset": "pax_traffic",
+      "source": "pax_traffic.csv",
+      "rows_in": 2903,
+      "rows_out": 2903,
+      "notes": []
+    },
+    {
+      "dataset": "hotel_performance",
+      "source": "hotel_performance.csv",
+      "rows_in": 2434,
+      "rows_out": 2433,
+      "notes": [
+        "removed 1 exact duplicate row(s)"
+      ]
+    },
+    {
+      "dataset": "events",
+      "source": "events.csv",
+      "rows_in": 56,
+      "rows_out": 56,
+      "notes": []
+    },
+    {
+      "dataset": "holidays",
+      "source": "holidays.csv",
+      "rows_in": 3295,
+      "rows_out": 3295,
+      "notes": []
+    },
+    {
+      "dataset": "seasonality",
+      "source": "seasonality.csv",
+      "rows_in": 12,
+      "rows_out": 12,
+      "notes": []
+    }
+  ],
+  "coverage": {
+    "flights_month": {
+      "first": "2019-01",
+      "last": "2025-12",
+      "n_months": 84
+    },
+    "pax_month": {
+      "first": "2019-01",
+      "last": "2025-12",
+      "n_months": 84
+    },
+    "hotel_month": {
+      "first": "2019-01",
+      "last": "2025-12",
+      "n_months": 84
+    }
+  },
+  "overlap_window": {
+    "first": "2019-01",
+    "last": "2025-12",
+    "n_months": 84,
+    "gaps": []
+  },
+  "missing_hotel_months": [
+    {
+      "nationality": "BR",
+      "missing": [
+        "2023-11"
+      ]
+    },
+    {
+      "nationality": "KW",
+      "missing": [
+        "2020-08"
+      ]
+    },
+    {
+      "nationality": "TH",
+      "missing": [
+        "2022-02"
+      ]
+    }
+  ],
+  "missing_pax_months": [
+    {
+      "month": "2021-03",
+      "origin_airport": "CMB"
+    }
+  ],
+  "pax_without_seats": [],
+  "service_starts_and_stops": [
+    {
+      "origin": "BR",
+      "first": "2021-07",
+      "last": "2025-12",
+      "months": 54
+    },
+    {
+      "origin": "JP",
+      "first": "2023-04",
+      "last": "2025-12",
+      "months": 33
+    },
+    {
+      "origin": "KE",
+      "first": "2022-10",
+      "last": "2025-12",
+      "months": 39
+    },
+    {
+      "origin": "MA",
+      "first": "2019-01",
+      "last": "2021-12",
+      "months": 36
+    },
+    {
+      "origin": "NG",
+      "first": "2019-01",
+      "last": "2023-06",
+      "months": 54
+    }
+  ],
+  "load_factor": {
+    "airport_months": 2904,
+    "above_1": 3,
+    "clipped_at_1_05": 1,
+    "rows_above_1": [
+      {
+        "month": "2021-07",
+        "origin_airport": "BOM",
+        "lf_raw": 1.001
+      },
+      {
+        "month": "2021-12",
+        "origin_airport": "JFK",
+        "lf_raw": 1.001
+      },
+      {
+        "month": "2022-12",
+        "origin_airport": "MNL",
+        "lf_raw": 1.08
+      }
+    ]
+  },
+  "outliers_robust_z_gt_4": [
+    {
+      "series": "hotel guests",
+      "key": "EG",
+      "month": "2024-12",
+      "value": 8400.0,
+      "robust_z": 4.04
+    },
+    {
+      "series": "hotel guests",
+      "key": "NG",
+      "month": "2022-12",
+      "value": 6500.0,
+      "robust_z": 4.32
+    },
+    {
+      "series": "airport seats",
+      "key": "BOM",
+      "month": "2021-05",
+      "value": 14028.0,
+      "robust_z": -6.01
+    },
+    {
+      "series": "airport seats",
+      "key": "BOM",
+      "month": "2021-06",
+      "value": 14252.0,
+      "robust_z": -5.87
+    },
+    {
+      "series": "airport seats",
+      "key": "BOM",
+      "month": "2021-07",
+      "value": 14812.0,
+      "robust_z": -5.53
+    },
+    {
+      "series": "airport seats",
+      "key": "CMB",
+      "month": "2021-05",
+      "value": 4536.0,
+      "robust_z": -5.25
+    },
+    {
+      "series": "airport seats",
+      "key": "CMB",
+      "month": "2021-06",
+      "value": 5040.0,
+      "robust_z": -4.38
+    },
+    {
+      "series": "airport seats",
+      "key": "CMB",
+      "month": "2021-07",
+      "value": 5208.0,
+      "robust_z": -4.11
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2019-02",
+      "value": 4640.0,
+      "robust_z": -5.9
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2019-03",
+      "value": 4930.0,
+      "robust_z": -4.69
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2019-05",
+      "value": 4930.0,
+      "robust_z": -4.69
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2019-09",
+      "value": 4930.0,
+      "robust_z": -4.69
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2019-11",
+      "value": 4930.0,
+      "robust_z": -4.69
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2020-01",
+      "value": 4930.0,
+      "robust_z": -4.69
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2020-02",
+      "value": 4930.0,
+      "robust_z": -4.69
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2021-07",
+      "value": 7830.0,
+      "robust_z": 4.56
+    },
+    {
+      "series": "airport seats",
+      "key": "CMN",
+      "month": "2021-08",
+      "value": 7830.0,
+      "robust_z": 4.56
+    },
+    {
+      "series": "airport seats",
+      "key": "COK",
+      "month": "2021-05",
+      "value": 10584.0,
+      "robust_z": -7.98
+    },
+    {
+      "series": "airport seats",
+      "key": "COK",
+      "month": "2021-06",
+      "value": 9912.0,
+      "robust_z": -8.78
+    },
+    {
+      "series": "airport seats",
+      "key": "COK",
+      "month": "2021-07",
+      "value": 10416.0,
+      "robust_z": -8.18
+    },
+    {
+      "series": "airport seats",
+      "key": "DEL",
+      "month": "2021-05",
+      "value": 12792.0,
+      "robust_z": -9.31
+    },
+    {
+      "series": "airport seats",
+      "key": "DEL",
+      "month": "2021-06",
+      "value": 11876.0,
+      "robust_z": -10.39
+    },
+    {
+      "series": "airport seats",
+      "key": "DEL",
+      "month": "2021-07",
+      "value": 12502.0,
+      "robust_z": -9.64
+    },
+    {
+      "series": "airport seats",
+      "key": "KHI",
+      "month": "2021-05",
+      "value": 6048.0,
+      "robust_z": -7.23
+    },
+    {
+      "series": "airport seats",
+      "key": "KHI",
+      "month": "2021-06",
+      "value": 5712.0,
+      "robust_z": -7.89
+    },
+    {
+      "series": "airport seats",
+      "key": "KHI",
+      "month": "2021-07",
+      "value": 5880.0,
+      "robust_z": -7.55
+    },
+    {
+      "series": "airport seats",
+      "key": "LHE",
+      "month": "2021-05",
+      "value": 6048.0,
+      "robust_z": -7.79
+    },
+    {
+      "series": "airport seats",
+      "key": "LHE",
+      "month": "2021-06",
+      "value": 5712.0,
+      "robust_z": -8.47
+    },
+    {
+      "series": "airport seats",
+      "key": "LHE",
+      "month": "2021-07",
+      "value": 5880.0,
+      "robust_z": -8.12
+    },
+    {
+      "series": "airport seats",
+      "key": "LOS",
+      "month": "2023-06",
+      "value": 7540.0,
+      "robust_z": 4.34
+    },
+    {
+      "series": "airport pax",
+      "key": "COK",
+      "month": "2021-05",
+      "value": 9436.0,
+      "robust_z": -4.8
+    },
+    {
+      "series": "airport pax",
+      "key": "COK",
+      "month": "2021-06",
+      "value": 8932.0,
+      "robust_z": -5.25
+    },
+    {
+      "series": "airport pax",
+      "key": "COK",
+      "month": "2021-07",
+      "value": 10040.0,
+      "robust_z": -4.3
+    },
+    {
+      "series": "airport pax",
+      "key": "DEL",
+      "month": "2021-05",
+      "value": 11531.0,
+      "robust_z": -4.86
+    },
+    {
+      "series": "airport pax",
+      "key": "DEL",
+      "month": "2021-06",
+      "value": 10696.0,
+      "robust_z": -5.48
+    },
+    {
+      "series": "airport pax",
+      "key": "DEL",
+      "month": "2021-07",
+      "value": 12209.0,
+      "robust_z": -4.38
+    },
+    {
+      "series": "airport pax",
+      "key": "KHI",
+      "month": "2021-06",
+      "value": 5102.0,
+      "robust_z": -4.07
+    },
+    {
+      "series": "airport pax",
+      "key": "LHE",
+      "month": "2021-05",
+      "value": 5174.0,
+      "robust_z": -5.37
+    },
+    {
+      "series": "airport pax",
+      "key": "LHE",
+      "month": "2021-06",
+      "value": 5215.0,
+      "robust_z": -5.3
+    },
+    {
+      "series": "airport pax",
+      "key": "LHE",
+      "month": "2021-07",
+      "value": 5783.0,
+      "robust_z": -4.43
+    }
+  ],
+  "counts": {
+    "origin_countries": 25,
+    "origin_airports": 37,
+    "nationalities": 29,
+    "events": 56,
+    "holiday_days": 3295
+  },
+  "reconciliation_feasibility": {
+    "overlap_months": 84,
+    "L0_identity": true,
+    "L1_regional": true,
+    "L2_bridge": true,
+    "note": "84 overlapping months >= 36: L2 learned bridge is feasible"
+  }
+}

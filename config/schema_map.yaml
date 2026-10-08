@@ -1,0 +1,77 @@
+# Raw-file -> canonical-column mapping. One entry per raw dataset.
+# `pattern` is a case-insensitive glob matched against file names in the data folder
+# (data/raw in real mode, data/synthetic/generated in synthetic mode).
+# `columns` maps RAW column name -> canonical name. Adapters fail loudly if a
+# required canonical column is not produced, naming the raw columns they saw.
+# When real data arrives: read its data dictionary, then edit the
+# patterns and raw column names below (left-hand side) to match it.
+
+datasets:
+  flight_schedule:
+    pattern: "*flight_schedule*"
+    grain: one row per origin airport x airline x aircraft type x flight date
+    columns:
+      FLT_DATE: date
+      ORIGIN_IATA: origin_airport
+      ORIGIN_COUNTRY: origin_country
+      CARRIER: airline
+      EQUIPMENT: aircraft_type
+      DEPARTURES: flights
+      SEATS: seats
+    required: [date, origin_airport, origin_country, airline, aircraft_type, flights, seats]
+    optional: [transfer_flag]
+
+  pax_traffic:
+    pattern: "*pax_traffic*"
+    grain: one row per origin airport x month (arrivals at Abu Dhabi)
+    columns:
+      PERIOD: month
+      ORIGIN_IATA: origin_airport
+      ORIGIN_COUNTRY: origin_country
+      ARR_PAX: pax_arriving
+      TRANSFER_PAX: pax_transfer
+    required: [month, origin_airport, origin_country, pax_arriving]
+    optional: [pax_transfer]
+
+  hotel_performance:
+    pattern: "*hotel_performance*"
+    grain: one row per month x guest nationality (all Abu Dhabi hotel establishments)
+    columns:
+      Month: month
+      Nationality: nationality
+      Guest Arrivals: guest_arrivals
+      Guest Nights: guest_nights
+      ALOS: alos
+      Occupancy %: occupancy
+    required: [month, nationality, guest_arrivals, guest_nights]
+    optional: [alos, occupancy]
+
+  events:
+    pattern: "*events*"
+    grain: one row per event
+    columns:
+      Event: name
+      Type: type
+      Start Date: start
+      End Date: end
+    required: [name, type, start, end]
+    optional: []
+
+  holidays:
+    pattern: "*holidays*"
+    grain: one row per country x holiday date
+    columns:
+      Date: date
+      Country: country
+      Holiday: name
+    required: [date, country, name]
+    optional: []
+
+  seasonality:
+    pattern: "*seasonality*"
+    grain: one row per month of year
+    columns:
+      Month: month_of_year
+      Index: index
+    required: [month_of_year, index]
+    optional: []
