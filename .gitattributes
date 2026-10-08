@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.pdf binary
+*.m4a binary
+*.duckdb binary
