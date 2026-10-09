@@ -21,7 +21,7 @@ Across plausible ranges of all levers, length of stay explains the largest share
 ## What a DCT planner should do differently
 
 - Rank route-development incentives by hotel guests per 1,000 seats, not by seats or passengers.
-- Protect summer low capacity on Saudi Arabia, United Kingdom first: that is where a capacity loss hurts hotels most.
+- Protect Summer low (Jun-Aug) capacity on Saudi Arabia, United Kingdom first: that is where a capacity loss hurts hotels most.
 - Plan non-air demand separately: about 45% of hotel guests in the latest year do not depend on flights into Abu Dhabi, so airline deals cannot move them.
 - Agree one shared number with airports and airlines: use the simulator's central estimate for targets and its 80% range for staffing and inventory buffers.
 - Test new markets with a trial season and re-estimate after 6 to 12 months of data.

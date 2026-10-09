@@ -38,12 +38,12 @@ def render() -> None:
         mk = st.selectbox("Market", top, key="val_market", format_func=lambda k: f"{regions.label(k)} ({k})")
         g = df[df["nationality"] == mk].sort_values("month")
         fig = go.Figure()
-        fig.add_scatter(x=g["month"], y=g["guests_hi80"], line={"width": 0}, showlegend=False, hoverinfo="skip")
-        fig.add_scatter(x=g["month"], y=g["guests_lo80"], line={"width": 0}, fill="tonexty", fillcolor=fx.BAND,
+        fig.add_scatter(mode="lines", x=g["month"], y=g["guests_hi80"], line={"width": 0}, showlegend=False, hoverinfo="skip")
+        fig.add_scatter(mode="lines", x=g["month"], y=g["guests_lo80"], line={"width": 0}, fill="tonexty", fillcolor=fx.BAND,
                         name="80% interval", hoverinfo="skip")
-        fig.add_scatter(x=g["month"], y=g["pred_guests"], name="Predicted (out of sample)",
+        fig.add_scatter(mode="lines", x=g["month"], y=g["pred_guests"], name="Predicted (out of sample)",
                         line={"color": fx.SERIES[0], "width": 2}, hovertemplate="%{x|%b %Y}: %{y:,.0f}<extra></extra>")
-        fig.add_scatter(x=g["month"], y=g["guests"], name="Actual", line={"color": fx.INK, "width": 1.6},
+        fig.add_scatter(mode="lines", x=g["month"], y=g["guests"], name="Actual", line={"color": fx.INK, "width": 1.6},
                         hovertemplate="%{x|%b %Y}: %{y:,.0f}<extra></extra>")
         hstart = pd.Timestamp(next(f for f in met["folds"] if f["holdout"])["cutoff"])
         fig.add_vline(x=hstart, line={"color": fx.AXIS, "dash": "dot"})

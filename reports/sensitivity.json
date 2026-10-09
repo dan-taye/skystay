@@ -403,7 +403,7 @@
   "sobol": {
     "N": 2048,
     "evaluations": 20480,
-    "seconds": 67.0,
+    "seconds": 90.0,
     "output": "annual guest nights",
     "y_mean": 12186945.603476157,
     "y_sd": 1155127.2127034815,
@@ -979,7 +979,7 @@
         "title": "What a DCT planner should do differently",
         "bullets": [
           "Rank route-development incentives by hotel guests per 1,000 seats, not by seats or passengers.",
-          "Protect summer low capacity on Saudi Arabia, United Kingdom first: that is where a capacity loss hurts hotels most.",
+          "Protect Summer low (Jun-Aug) capacity on Saudi Arabia, United Kingdom first: that is where a capacity loss hurts hotels most.",
           "Plan non-air demand separately: about 45% of hotel guests in the latest year do not depend on flights into Abu Dhabi, so airline deals cannot move them.",
           "Agree one shared number with airports and airlines: use the simulator's central estimate for targets and its 80% range for staffing and inventory buffers.",
           "Test new markets with a trial season and re-estimate after 6 to 12 months of data."

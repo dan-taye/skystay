@@ -1,0 +1,71 @@
+# Storyboard for the 1-2 minute demo video (skystay video).
+# Captions are templates: {placeholders} are filled from reports/*.json and the scenario engine at build time
+# (see src/skystay/video/build.py: caption_values). Each caption must stay <= 12 words after filling.
+# Actions: goto | click_text | click_tab | click_role | scroll | hover_text | wait
+target_seconds: 101
+scenes:
+  - id: title
+    type: card
+    hold_seconds: 4
+  - id: problem
+    page: ""
+    hold_seconds: 8
+    caption: "Flights count departure country; hotels count guest nationality."
+    actions: []
+  - id: system
+    page: how-it-works
+    hold_seconds: 12
+    caption: "Data, transparent chain plus ML, scenario engine, simulator."
+    actions:
+      - {hover_text: "Parametric chain"}
+      - {wait: 2.5}
+      - {hover_text: "Scenario engine"}
+  - id: chain
+    page: chain
+    hold_seconds: 10
+    caption: "{chain_origin}: {chain_seats} seats become {chain_guests} hotel guests."
+    actions:
+      - {wait: 3}
+      - {scroll: 420}
+  - id: whatif_route
+    page: simulator
+    hold_seconds: 18
+    caption: "New 2x-weekly {new_route_origin} route: {new_route_delta} guests (80%: {new_route_lo} to {new_route_hi})."
+    actions:
+      - {wait: 1.2}
+      - {click_text: "Add a new route"}
+      - {wait: 3}
+      - {click_text: "Guest nights"}
+      - {wait: 3}
+      - {click_tab: "By market"}
+  - id: whatif_winter
+    page: "simulator?preset=winter_cut"
+    hold_seconds: 12
+    caption: "30% winter cut on {winter_market} flights: {winter_delta} hotel guests."
+    actions:
+      - {wait: 3}
+      - {click_tab: "By market"}
+  - id: sensitivity
+    page: sensitivity
+    hold_seconds: 10
+    caption: "Biggest levers: {sobol_1}, {sobol_2}, {sobol_3}."
+    actions:
+      - {wait: 4}
+      - {click_text: "+/-1 historical SD"}
+  - id: validation
+    page: validation
+    hold_seconds: 10
+    caption: "Back-test: {wmape} WMAPE vs {naive} seasonal naive."
+    actions:
+      - {wait: 3.5}
+      - {scroll: 640}
+  - id: brief
+    page: brief
+    hold_seconds: 12
+    caption: "Rank routes by hotel guests per 1,000 seats, not seats."
+    actions:
+      - {wait: 5}
+      - {scroll: 360}
+  - id: end
+    type: card
+    hold_seconds: 5

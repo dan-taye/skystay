@@ -61,15 +61,15 @@ def render() -> None:
                                textfont={"color": fx.INK_2},
                                hovertemplate="%{y}: %{x:,.0f} guests<extra></extra>"))
         fx.layout(fig, "Top source markets by hotel guests (model)", height=430, legend=False)
-        fig.update_xaxes(title="Hotel guests per year", showgrid=True, gridcolor=fx.GRID)
+        fig.update_xaxes(title="Hotel guests per year", showgrid=True, gridcolor=fx.GRID, range=[0, g.max() * 1.18])
         fig.update_layout(margin={"r": 70})
         ui.chart(fig, "ov_top")
     m = bl.monthly
     fig = go.Figure()
-    fig.add_scatter(x=m["month"], y=m["guests_hi80"], line={"width": 0}, showlegend=False, hoverinfo="skip")
-    fig.add_scatter(x=m["month"], y=m["guests_lo80"], line={"width": 0}, fill="tonexty", fillcolor=fx.BAND,
+    fig.add_scatter(mode="lines", x=m["month"], y=m["guests_hi80"], line={"width": 0}, showlegend=False, hoverinfo="skip")
+    fig.add_scatter(mode="lines", x=m["month"], y=m["guests_lo80"], line={"width": 0}, fill="tonexty", fillcolor=fx.BAND,
                     name="80% range", hoverinfo="skip")
-    fig.add_scatter(x=m["month"], y=m["guests"], line={"color": fx.SERIES[0], "width": 2}, name="Hotel guests",
+    fig.add_scatter(mode="lines", x=m["month"], y=m["guests"], line={"color": fx.SERIES[0], "width": 2}, name="Hotel guests",
                     hovertemplate="%{x|%b %Y}: %{y:,.0f} guests<extra></extra>")
     fx.layout(fig, "Hotel guests by month, reference year (model, with 80% range)", height=320)
     fig.update_yaxes(title="Hotel guests per month", rangemode="tozero")

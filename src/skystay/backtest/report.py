@@ -31,11 +31,11 @@ def fig_top10(chosen: pd.DataFrame, out: dict) -> go.Figure:
     for i, n in enumerate(top):
         r, c = i // 5 + 1, i % 5 + 1
         g = chosen[chosen["nationality"] == n].sort_values("month")
-        fig.add_trace(go.Scatter(x=g["month"], y=g["guests_hi80"], line={"width": 0}, showlegend=False,
+        fig.add_trace(go.Scatter(mode="lines", x=g["month"], y=g["guests_hi80"], line={"width": 0}, showlegend=False,
                                  hoverinfo="skip"), r, c)
-        fig.add_trace(go.Scatter(x=g["month"], y=g["guests_lo80"], line={"width": 0}, fill="tonexty",
+        fig.add_trace(go.Scatter(mode="lines", x=g["month"], y=g["guests_lo80"], line={"width": 0}, fill="tonexty",
                                  fillcolor=fx.BAND, name="80% interval", showlegend=i == 0, hoverinfo="skip"), r, c)
-        fig.add_trace(go.Scatter(x=g["month"], y=g["pred_guests"], line={"color": fx.SERIES[0], "width": 2},
+        fig.add_trace(go.Scatter(mode="lines", x=g["month"], y=g["pred_guests"], line={"color": fx.SERIES[0], "width": 2},
                                  name="Predicted", showlegend=i == 0,
                                  hovertemplate="%{x|%b %Y}<br>Predicted %{y:,.0f}<extra></extra>"), r, c)
         fig.add_trace(go.Scatter(x=g["month"], y=g["guests"], line={"color": fx.INK, "width": 1.5},

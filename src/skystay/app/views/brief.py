@@ -24,6 +24,13 @@ def render() -> None:
         st.warning("Run `skystay sensitivity` first.")
         return
     sec = s["planner_brief"]["sections"]
+    st.markdown("### Real-life use plan")
+    cols = st.columns(len(USE_PLAN))
+    for col, (title, text) in zip(cols, USE_PLAN, strict=True):
+        col.markdown(f'<div class="ss-kpi"><div style="font-weight:650;font-size:1.02rem;color:#184f95;'
+                     f'margin-bottom:6px">{title}</div><div style="color:#0b0b0b;font-size:0.95rem;line-height:1.45">'
+                     f"{text}</div></div>", unsafe_allow_html=True)
+    st.write("")
     c1, c2 = st.columns(2)
     for col, keys in ((c1, ("best_routes", "new_markets", "seasonal_risk")), (c2, ("what_matters", "confidence"))):
         with col:
@@ -32,10 +39,6 @@ def render() -> None:
                 st.markdown(sec[k]["text"])
     st.markdown(f"### {sec['do_differently']['title']}")
     st.markdown("\n".join(f"{i}. {b}" for i, b in enumerate(sec["do_differently"]["bullets"], 1)))
-    st.markdown("### Real-life use plan")
-    cols = st.columns(len(USE_PLAN))
-    for col, (title, text) in zip(cols, USE_PLAN, strict=True):
-        col.markdown(ui.kpi(title, "", text), unsafe_allow_html=True)
     st.write("")
     st.download_button("Download this brief (Markdown)", (ui.doc("../reports/planner_brief.md")).encode(),
                        file_name=f"{ui.product()}_planner_brief.md", mime="text/markdown", key="brief_dl")

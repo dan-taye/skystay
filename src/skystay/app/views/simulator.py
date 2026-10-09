@@ -244,16 +244,16 @@ def results_panel(e, sc: Scenario, res) -> None:
         m = res.monthly
         col = metric
         fig = go.Figure()
-        fig.add_scatter(x=m["month"], y=m[f"{col}_hi95"], line={"width": 0}, showlegend=False, hoverinfo="skip")
-        fig.add_scatter(x=m["month"], y=m[f"{col}_lo95"], line={"width": 0}, fill="tonexty", fillcolor=fx.BAND_95,
+        fig.add_scatter(mode="lines", x=m["month"], y=m[f"{col}_hi95"], line={"width": 0}, showlegend=False, hoverinfo="skip")
+        fig.add_scatter(mode="lines", x=m["month"], y=m[f"{col}_lo95"], line={"width": 0}, fill="tonexty", fillcolor=fx.BAND_95,
                         name="95% range", hoverinfo="skip")
-        fig.add_scatter(x=m["month"], y=m[f"{col}_hi80"], line={"width": 0}, showlegend=False, hoverinfo="skip")
-        fig.add_scatter(x=m["month"], y=m[f"{col}_lo80"], line={"width": 0}, fill="tonexty", fillcolor=fx.BAND,
+        fig.add_scatter(mode="lines", x=m["month"], y=m[f"{col}_hi80"], line={"width": 0}, showlegend=False, hoverinfo="skip")
+        fig.add_scatter(mode="lines", x=m["month"], y=m[f"{col}_lo80"], line={"width": 0}, fill="tonexty", fillcolor=fx.BAND,
                         name="80% range", hoverinfo="skip")
-        fig.add_scatter(x=m["month"], y=m[f"baseline_{col}"], name="Baseline",
+        fig.add_scatter(mode="lines", x=m["month"], y=m[f"baseline_{col}"], name="Baseline",
                         line={"color": fx.MUTED, "width": 2, "dash": "dot"},
                         hovertemplate="%{x|%b}: %{y:,.0f}<extra>Baseline</extra>")
-        fig.add_scatter(x=m["month"], y=m[col], name="Scenario", line={"color": fx.SERIES[0], "width": 2.5},
+        fig.add_scatter(mode="lines", x=m["month"], y=m[col], name="Scenario", line={"color": fx.SERIES[0], "width": 2.5},
                         hovertemplate="%{x|%b}: %{y:,.0f}<extra>Scenario</extra>")
         fx.layout(fig, f"{unit} by month: scenario vs baseline", height=330)
         fig.update_yaxes(title=f"{unit} per month", rangemode="tozero")
@@ -273,9 +273,12 @@ def results_panel(e, sc: Scenario, res) -> None:
             text=[ui.signed(v) for v in moved["delta"]], textposition="outside", textfont={"color": fx.INK_2},
             hovertemplate="%{y}: %{x:+,.0f} guests<extra></extra>"))
         fx.layout(fig, "Change in hotel guests by nationality (plan year)", height=420, legend=False)
+        lo_x, hi_x = min(moved["delta"].min(), 0.0), max(moved["delta"].max(), 0.0)
+        span = max(hi_x - lo_x, 1.0)
         fig.update_xaxes(title="Hotel guests vs baseline", tickformat="+,.0f", zeroline=True, zerolinecolor=fx.AXIS,
-                         showgrid=True, gridcolor=fx.GRID)
-        fig.update_layout(margin={"r": 70})
+                         showgrid=True, gridcolor=fx.GRID,
+                         range=[lo_x - 0.22 * span * (lo_x < 0), hi_x + 0.22 * span * (hi_x > 0)])
+        fig.update_layout(margin={"r": 40, "l": 40})
         ui.chart(fig, "sim_market")
         show = by.assign(name=[ui.name(k) for k in by["market"]]).sort_values("guests", ascending=False)
         st.dataframe(show[["name", "guests", "delta", "nights", "dn"]].rename(columns={
