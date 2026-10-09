@@ -1,0 +1,994 @@
+{
+  "data_mode": "synthetic",
+  "reference_year": "2025-01..2025-12",
+  "historical_sd": {
+    "capacity": 0.026275140391423576,
+    "load_factor": 0.2285127686327186,
+    "transfer_share": 0.5837098201414528,
+    "capture": 0.02324173975506267,
+    "alos": 0.0056301446276944955,
+    "events": 0.16265001215808894
+  },
+  "tornado": {
+    "baseline_nights": 11758609.962035168,
+    "top_markets": [
+      "AE",
+      "GB",
+      "SA",
+      "DE",
+      "RU"
+    ],
+    "levers": [
+      {
+        "lever": "alos",
+        "label": "Length of stay",
+        "unit": "x",
+        "pct10": {
+          "step": 0.1,
+          "low": -1175860.9962035194,
+          "high": 1175860.9962035157,
+          "low_pct": -0.10000000000000023,
+          "high_pct": 0.09999999999999991,
+          "by_market": {
+            "AE": [
+              -112416.41520647437,
+              112416.41520647425
+            ],
+            "GB": [
+              -109344.8388225662,
+              109344.83882256644
+            ],
+            "SA": [
+              -99409.55136561918,
+              99409.55136561894
+            ],
+            "DE": [
+              -89635.30719726405,
+              89635.30719726393
+            ],
+            "RU": [
+              -70019.65415751725,
+              70019.65415751725
+            ]
+          }
+        },
+        "sd1": {
+          "step": 0.0056301446276944955,
+          "low": -66202.6747069098,
+          "high": 66202.67470690608,
+          "low_pct": -0.0056301446276947106,
+          "high_pct": 0.005630144627694394,
+          "by_market": {
+            "AE": [
+              -6329.206761394162,
+              6329.206761393929
+            ],
+            "GB": [
+              -6156.272568630055,
+              6156.272568630055
+            ],
+            "SA": [
+              -5596.901515626698,
+              5596.901515626465
+            ],
+            "DE": [
+              -5046.597432684386,
+              5046.597432684153
+            ],
+            "RU": [
+              -3942.207796879695,
+              3942.207796879695
+            ]
+          }
+        }
+      },
+      {
+        "lever": "capacity",
+        "label": "Seat capacity (frequency x aircraft size)",
+        "unit": "x seats",
+        "pct10": {
+          "step": 0.1,
+          "low": -701522.1804736853,
+          "high": 700487.9796235468,
+          "low_pct": -0.059660298516463976,
+          "high_pct": 0.05957234587125527,
+          "by_market": {
+            "AE": [
+              0.0,
+              0.0
+            ],
+            "GB": [
+              -79441.06322830345,
+              79014.68199757137
+            ],
+            "SA": [
+              -54032.343440973666,
+              53497.66187348461
+            ],
+            "DE": [
+              -78595.72992927977,
+              78328.66089292197
+            ],
+            "RU": [
+              -24326.4114916228,
+              24450.64686233492
+            ]
+          }
+        },
+        "sd1": {
+          "step": 0.026275140391423576,
+          "low": -184806.92262453586,
+          "high": 184151.1567541957,
+          "low_pct": -0.015716732098540468,
+          "high_pct": 0.01566096310267638,
+          "by_market": {
+            "AE": [
+              0.0,
+              0.0
+            ],
+            "GB": [
+              -20730.070528376382,
+              20729.960788300494
+            ],
+            "SA": [
+              -14627.897222629632,
+              14316.471028215718
+            ],
+            "DE": [
+              -20707.696565412218,
+              20590.92746286746
+            ],
+            "RU": [
+              -6449.34197786788,
+              6425.8743624521885
+            ]
+          }
+        }
+      },
+      {
+        "lever": "capture",
+        "label": "Hotel capture rate",
+        "unit": "x",
+        "pct10": {
+          "step": 0.1,
+          "low": -697123.8851597123,
+          "high": 697123.8851597048,
+          "low_pct": -0.059286249600123214,
+          "high_pct": 0.059286249600122576,
+          "by_market": {
+            "AE": [
+              0.0,
+              0.0
+            ],
+            "GB": [
+              -78622.92019367381,
+              78622.92019367381
+            ],
+            "SA": [
+              -52742.365835106815,
+              52742.365835106815
+            ],
+            "DE": [
+              -78023.29027692112,
+              78023.290276921
+            ],
+            "RU": [
+              -24170.048260944895,
+              24170.04826094478
+            ]
+          }
+        },
+        "sd1": {
+          "step": 0.02324173975506267,
+          "low": -162023.7191592045,
+          "high": 162023.71915919892,
+          "low_pct": -0.01377915584259771,
+          "high_pct": 0.013779155842597235,
+          "by_market": {
+            "AE": [
+              0.0,
+              0.0
+            ],
+            "GB": [
+              -18273.334499244345,
+              18273.334499244113
+            ],
+            "SA": [
+              -12258.24340805877,
+              12258.24340805842
+            ],
+            "DE": [
+              -18133.970074499375,
+              18133.970074498793
+            ],
+            "RU": [
+              -5617.539715481922,
+              5617.539715481689
+            ]
+          }
+        }
+      },
+      {
+        "lever": "load_factor",
+        "label": "Load factor",
+        "unit": "pp",
+        "pct10": {
+          "step": 8.166405883772743,
+          "low": -699489.645176772,
+          "high": 670076.3453092147,
+          "low_pct": -0.05948744345081628,
+          "high_pct": 0.056986016839803276,
+          "by_market": {
+            "AE": [
+              0.0,
+              0.0
+            ],
+            "GB": [
+              -75573.88806228014,
+              68082.53648357675
+            ],
+            "SA": [
+              -58127.71127566742,
+              56906.61640446272
+            ],
+            "DE": [
+              -76310.52568863402,
+              72263.74335205613
+            ],
+            "RU": [
+              -22713.012497579446,
+              19259.194701233995
+            ]
+          }
+        },
+        "sd1": {
+          "step": 0.2285127686327186,
+          "low": -19787.64450865984,
+          "high": 19506.832849137485,
+          "low_pct": -0.0016828217427525775,
+          "high_pct": 0.0016589403774866993,
+          "by_market": {
+            "AE": [
+              0.0,
+              0.0
+            ],
+            "GB": [
+              -2089.7277901070192,
+              2089.7277901070192
+            ],
+            "SA": [
+              -1776.1538116147276,
+              1584.036175499903
+            ],
+            "DE": [
+              -2223.251623455668,
+              2123.315136106219
+            ],
+            "RU": [
+              -632.3206450343132,
+              676.3529018892441
+            ]
+          }
+        }
+      },
+      {
+        "lever": "transfer_share",
+        "label": "Transfer / transit share",
+        "unit": "pp",
+        "pct10": {
+          "step": 3.7790546832954415,
+          "low": 474297.33188865706,
+          "high": -475513.8721507136,
+          "low_pct": 0.040336173529015175,
+          "high_pct": -0.0404396330591794,
+          "by_market": {
+            "AE": [
+              0.0,
+              0.0
+            ],
+            "GB": [
+              65002.88215475343,
+              -65312.006237839116
+            ],
+            "SA": [
+              26859.168242615764,
+              -27442.49687593663
+            ],
+            "DE": [
+              58374.80391569866,
+              -58621.29242823133
+            ],
+            "RU": [
+              12414.024250913993,
+              -12342.956222244073
+            ]
+          }
+        },
+        "sd1": {
+          "step": 0.5837098201414528,
+          "low": 73557.36826734804,
+          "high": -74066.17398530804,
+          "low_pct": 0.006255617671207865,
+          "high_pct": -0.0062988885781945555,
+          "by_market": {
+            "AE": [
+              0.0,
+              0.0
+            ],
+            "GB": [
+              9999.006931086536,
+              -10046.039284746861
+            ],
+            "SA": [
+              4521.647317480878,
+              -4845.232662552036
+            ],
+            "DE": [
+              9036.62858614605,
+              -9091.138619295321
+            ],
+            "RU": [
+              1966.0682365915272,
+              -1930.4747055745684
+            ]
+          }
+        }
+      },
+      {
+        "lever": "events",
+        "label": "Event days added per month",
+        "unit": "days",
+        "pct10": {
+          "step": 0.38333333333333336,
+          "low": -16552.933684438467,
+          "high": 27686.372968625277,
+          "low_pct": -0.0014077287823886203,
+          "high_pct": 0.002354561726089718,
+          "by_market": {
+            "AE": [
+              -3167.8387187223416,
+              4811.906330429483
+            ],
+            "GB": [
+              -1225.5261893898714,
+              2082.931998207001
+            ],
+            "SA": [
+              -1510.513862509746,
+              2527.970593277598
+            ],
+            "DE": [
+              -696.9461953863502,
+              1250.7523730898974
+            ],
+            "RU": [
+              -1404.020889082225,
+              2221.600977947237
+            ]
+          }
+        },
+        "sd1": {
+          "step": 0.16265001215808894,
+          "low": -7023.48225659132,
+          "high": 14456.501708162948,
+          "low_pct": -0.000597305487576161,
+          "high_pct": 0.0012294396833331847,
+          "by_market": {
+            "AE": [
+              -1344.1278420393355,
+              2304.061495435424
+            ],
+            "GB": [
+              -519.996129402658,
+              1111.922283982858
+            ],
+            "SA": [
+              -640.9176472231047,
+              1292.473801988992
+            ],
+            "DE": [
+              -295.7173230081098,
+              708.5949062143918
+            ],
+            "RU": [
+              -595.7322122072801,
+              1109.2143770161783
+            ]
+          }
+        }
+      }
+    ],
+    "note": "Effect on annual hotel guest nights of moving one lever at a time, all markets together. '+/-10%' moves the lever by 10% of its value; '+/-1 SD' by one historical year-to-year standard deviation. The non-air baseline is not a lever."
+  },
+  "sobol": {
+    "N": 2048,
+    "evaluations": 20480,
+    "seconds": 67.0,
+    "output": "annual guest nights",
+    "y_mean": 12186945.603476157,
+    "y_sd": 1155127.2127034815,
+    "factors": [
+      {
+        "factor": "alos",
+        "label": "Length of stay",
+        "range": [
+          0.9,
+          1.1
+        ],
+        "unit": "x",
+        "S1": 0.37063428060863335,
+        "S1_ci95": 0.03621765411439395,
+        "ST": 0.3725940842164147,
+        "ST_ci95": 0.02640287530843874
+      },
+      {
+        "factor": "capacity",
+        "label": "Seat capacity (frequency x aircraft size)",
+        "range": [
+          0.85,
+          1.15
+        ],
+        "unit": "x seats",
+        "S1": 0.302930873852098,
+        "S1_ci95": 0.027100529567553034,
+        "ST": 0.3063974230670299,
+        "ST_ci95": 0.020825338811036723
+      },
+      {
+        "factor": "capture",
+        "label": "Hotel capture rate",
+        "range": [
+          0.9,
+          1.1
+        ],
+        "unit": "x",
+        "S1": 0.1335535013976445,
+        "S1_ci95": 0.021535423190142355,
+        "ST": 0.13516093894994777,
+        "ST_ci95": 0.00822613491028816
+      },
+      {
+        "factor": "transfer_share",
+        "label": "Transfer / transit share",
+        "range": [
+          -5.0,
+          5.0
+        ],
+        "unit": "pp",
+        "S1": 0.1082879036782523,
+        "S1_ci95": 0.01830145182623558,
+        "ST": 0.10998178734185433,
+        "ST_ci95": 0.0069482153504577355
+      },
+      {
+        "factor": "load_factor",
+        "label": "Load factor",
+        "range": [
+          -5.0,
+          5.0
+        ],
+        "unit": "pp",
+        "S1": 0.050055084285937176,
+        "S1_ci95": 0.013619996758577602,
+        "ST": 0.050834221064618955,
+        "ST_ci95": 0.0032780615837691525
+      },
+      {
+        "factor": "market_mix",
+        "label": "Market mix (seats moved from 5 lowest- to 5 highest-yield markets)",
+        "range": [
+          0.0,
+          20.0
+        ],
+        "unit": "% of seats",
+        "S1": 0.020782801316177907,
+        "S1_ci95": 0.010525312932204975,
+        "ST": 0.021024297502566534,
+        "ST_ci95": 0.0014918414733624563
+      },
+      {
+        "factor": "events",
+        "label": "Event days added per month",
+        "range": [
+          0.0,
+          3.0
+        ],
+        "unit": "days",
+        "S1": 0.00655072280188419,
+        "S1_ci95": 0.004958252811840034,
+        "ST": 0.00633929983898973,
+        "ST_ci95": 0.00047205298055380144
+      },
+      {
+        "factor": "season_shift",
+        "label": "Seasonal shift (summer seats moved to winter)",
+        "range": [
+          -15.0,
+          15.0
+        ],
+        "unit": "% of summer seats",
+        "S1": 0.0019043160908470422,
+        "S1_ci95": 0.002399861662919335,
+        "ST": 0.0018595951794501265,
+        "ST_ci95": 0.00012558175715707861
+      }
+    ],
+    "method": "SALib Sobol sequence (Saltelli scheme), first- and total-order indices with 95% bootstrap CIs"
+  },
+  "per_1000_seats": {
+    "rows": [
+      {
+        "origin": "CA",
+        "name": "Canada",
+        "status": "cold-start estimate",
+        "seats_added": 105850.0,
+        "guests_per_1000_seats": 564.3196935446807,
+        "nights_per_1000_seats": 2100.6392974845176,
+        "lo80": 316.793879936887,
+        "hi80": 842.2217264377541
+      },
+      {
+        "origin": "US",
+        "name": "United States",
+        "status": "served",
+        "seats_added": 33715.0,
+        "guests_per_1000_seats": 558.3368839943141,
+        "nights_per_1000_seats": 1915.5276741019816,
+        "lo80": 536.7564481342231,
+        "hi80": 582.6034929491587
+      },
+      {
+        "origin": "CN",
+        "name": "China",
+        "status": "served",
+        "seats_added": 28420.0,
+        "guests_per_1000_seats": 462.62647474166937,
+        "nights_per_1000_seats": 1352.2469114360154,
+        "lo80": 438.4106582773172,
+        "hi80": 520.5236961029127
+      },
+      {
+        "origin": "IT",
+        "name": "Italy",
+        "status": "served",
+        "seats_added": 33988.0,
+        "guests_per_1000_seats": 461.8778045817547,
+        "nights_per_1000_seats": 1797.589382602662,
+        "lo80": 436.98402777939435,
+        "hi80": 520.7609497397809
+      },
+      {
+        "origin": "KR",
+        "name": "South Korea",
+        "status": "cold-start estimate",
+        "seats_added": 105850.0,
+        "guests_per_1000_seats": 453.24662506843873,
+        "nights_per_1000_seats": 1463.2914356221643,
+        "lo80": 233.6826327157576,
+        "hi80": 816.015139378237
+      },
+      {
+        "origin": "JP",
+        "name": "Japan",
+        "status": "served",
+        "seats_added": 12702.0,
+        "guests_per_1000_seats": 446.3715715667576,
+        "nights_per_1000_seats": 1391.2695305312848,
+        "lo80": 360.590687874376,
+        "hi80": 542.3399847528382
+      },
+      {
+        "origin": "FR",
+        "name": "France",
+        "status": "served",
+        "seats_added": 26912.0,
+        "guests_per_1000_seats": 414.1869021413652,
+        "nights_per_1000_seats": 1697.208614022497,
+        "lo80": 382.50491467288646,
+        "hi80": 469.1597496210194
+      },
+      {
+        "origin": "DE",
+        "name": "Germany",
+        "status": "served",
+        "seats_added": 53034.0,
+        "guests_per_1000_seats": 393.0908274720779,
+        "nights_per_1000_seats": 1620.4641675251341,
+        "lo80": 372.0572488777359,
+        "hi80": 434.23525418762534
+      },
+      {
+        "origin": "BR",
+        "name": "Brazil",
+        "status": "served",
+        "seats_added": 6264.0,
+        "guests_per_1000_seats": 370.21074939980366,
+        "nights_per_1000_seats": 1370.3747291434888,
+        "lo80": 333.7523393156477,
+        "hi80": 410.64107639210016
+      },
+      {
+        "origin": "ES",
+        "name": "Spain",
+        "status": "cold-start estimate",
+        "seats_added": 105850.0,
+        "guests_per_1000_seats": 362.4531113839918,
+        "nights_per_1000_seats": 1169.9157867970075,
+        "lo80": 164.82698395640014,
+        "hi80": 660.9265570066048
+      },
+      {
+        "origin": "NL",
+        "name": "Netherlands",
+        "status": "cold-start estimate",
+        "seats_added": 105850.0,
+        "guests_per_1000_seats": 362.4531113839918,
+        "nights_per_1000_seats": 1169.9157867970075,
+        "lo80": 175.00300168257422,
+        "hi80": 661.8952977397195
+      },
+      {
+        "origin": "KW",
+        "name": "Kuwait",
+        "status": "served",
+        "seats_added": 13288.799999999814,
+        "guests_per_1000_seats": 352.4054410614316,
+        "nights_per_1000_seats": 921.866149049607,
+        "lo80": 327.1068069480289,
+        "hi80": 386.07807644694327
+      },
+      {
+        "origin": "QA",
+        "name": "Qatar",
+        "status": "served",
+        "seats_added": 16279.200000000186,
+        "guests_per_1000_seats": 347.4415050667483,
+        "nights_per_1000_seats": 977.5155198696053,
+        "lo80": 321.34936956929107,
+        "hi80": 372.76428632422744
+      },
+      {
+        "origin": "OM",
+        "name": "Oman",
+        "status": "served",
+        "seats_added": 25401.599999999627,
+        "guests_per_1000_seats": 319.61865828813677,
+        "nights_per_1000_seats": 722.5241906757049,
+        "lo80": 298.78378190455953,
+        "hi80": 348.30172103349344
+      },
+      {
+        "origin": "SA",
+        "name": "Saudi Arabia",
+        "status": "served",
+        "seats_added": 63526.40000000037,
+        "guests_per_1000_seats": 313.00572328131875,
+        "nights_per_1000_seats": 754.4225900911174,
+        "lo80": 258.51739577706394,
+        "hi80": 378.98479122436356
+      },
+      {
+        "origin": "GB",
+        "name": "United Kingdom",
+        "status": "served",
+        "seats_added": 71927.0,
+        "guests_per_1000_seats": 305.46853983637817,
+        "nights_per_1000_seats": 1205.3502965234247,
+        "lo80": 272.39963130898917,
+        "hi80": 337.07884277059134
+      },
+      {
+        "origin": "RU",
+        "name": "Russia",
+        "status": "served",
+        "seats_added": 15503.599999999627,
+        "guests_per_1000_seats": 303.98305855730996,
+        "nights_per_1000_seats": 1533.3650181216287,
+        "lo80": 260.7740398287782,
+        "hi80": 347.8160057680453
+      },
+      {
+        "origin": "AU",
+        "name": "Australia",
+        "status": "served",
+        "seats_added": 43848.0,
+        "guests_per_1000_seats": 288.5656695266398,
+        "nights_per_1000_seats": 989.0531839629884,
+        "lo80": 261.9972165878362,
+        "hi80": 319.0913121435279
+      },
+      {
+        "origin": "SG",
+        "name": "Singapore",
+        "status": "served",
+        "seats_added": 32425.0,
+        "guests_per_1000_seats": 283.56398969312806,
+        "nights_per_1000_seats": 807.6501867927053,
+        "lo80": 266.8957769641381,
+        "hi80": 307.1238398377338
+      },
+      {
+        "origin": "NZ",
+        "name": "New Zealand",
+        "status": "cold-start estimate",
+        "seats_added": 105850.0,
+        "guests_per_1000_seats": 278.30346535010125,
+        "nights_per_1000_seats": 898.1291799903106,
+        "lo80": 110.90453370269317,
+        "hi80": 520.3147083855587
+      },
+      {
+        "origin": "TH",
+        "name": "Thailand",
+        "status": "served",
+        "seats_added": 19749.0,
+        "guests_per_1000_seats": 277.7891802965387,
+        "nights_per_1000_seats": 840.9715217104655,
+        "lo80": 254.40332968734396,
+        "hi80": 306.7301716528591
+      },
+      {
+        "origin": "KE",
+        "name": "Kenya",
+        "status": "served",
+        "seats_added": 16994.0,
+        "guests_per_1000_seats": 272.0780688098164,
+        "nights_per_1000_seats": 859.7144316703237,
+        "lo80": 222.4876136142929,
+        "hi80": 332.98699032049245
+      },
+      {
+        "origin": "JO",
+        "name": "Jordan",
+        "status": "served",
+        "seats_added": 21957.599999999627,
+        "guests_per_1000_seats": 256.2139147337592,
+        "nights_per_1000_seats": 743.8566267758098,
+        "lo80": 233.22309600589057,
+        "hi80": 277.35689127596675
+      },
+      {
+        "origin": "ZA",
+        "name": "South Africa",
+        "status": "cold-start estimate",
+        "seats_added": 105850.0,
+        "guests_per_1000_seats": 235.7145829208197,
+        "nights_per_1000_seats": 826.0702347787635,
+        "lo80": 109.78857152835003,
+        "hi80": 431.9537050575502
+      },
+      {
+        "origin": "MY",
+        "name": "Malaysia",
+        "status": "cold-start estimate",
+        "seats_added": 105850.0,
+        "guests_per_1000_seats": 215.62007412490826,
+        "nights_per_1000_seats": 690.167121894545,
+        "lo80": 106.29963360579282,
+        "hi80": 388.9881677400359
+      },
+      {
+        "origin": "TR",
+        "name": "Turkey",
+        "status": "cold-start estimate",
+        "seats_added": 105850.0,
+        "guests_per_1000_seats": 184.0899886121603,
+        "nights_per_1000_seats": 589.7875121520391,
+        "lo80": 97.68049387701417,
+        "hi80": 334.4867423037934
+      },
+      {
+        "origin": "LK",
+        "name": "Sri Lanka",
+        "status": "served",
+        "seats_added": 9542.400000000373,
+        "guests_per_1000_seats": 143.26439425409188,
+        "nights_per_1000_seats": 375.47274885942386,
+        "lo80": 136.44736336689846,
+        "hi80": 160.11157931581914
+      },
+      {
+        "origin": "EG",
+        "name": "Egypt",
+        "status": "served",
+        "seats_added": 29251.599999999627,
+        "guests_per_1000_seats": 136.06988277418301,
+        "nights_per_1000_seats": 412.86463688329655,
+        "lo80": 117.21468474090824,
+        "hi80": 164.52808671960378
+      },
+      {
+        "origin": "PH",
+        "name": "Philippines",
+        "status": "served",
+        "seats_added": 29950.200000000186,
+        "guests_per_1000_seats": 127.10614892069013,
+        "nights_per_1000_seats": 322.71389167113404,
+        "lo80": 113.99745812492988,
+        "hi80": 143.70793154549037
+      },
+      {
+        "origin": "IN",
+        "name": "India",
+        "status": "served",
+        "seats_added": 98303.59999999963,
+        "guests_per_1000_seats": 86.5174832469804,
+        "nights_per_1000_seats": 233.52341033875365,
+        "lo80": 76.47286561820263,
+        "hi80": 97.47790476098707
+      },
+      {
+        "origin": "PK",
+        "name": "Pakistan",
+        "status": "served",
+        "seats_added": 39043.200000000186,
+        "guests_per_1000_seats": 73.04059916408335,
+        "nights_per_1000_seats": 213.77327520934008,
+        "lo80": 63.14052958032144,
+        "hi80": 82.82398404720493
+      }
+    ],
+    "method": "served markets: +10% weekly frequency on all of the market's routes; candidate markets: a new daily B787-9 route (cold-start: region-average parameters, doubled uncertainty). Hotel guests across ALL nationalities per 1,000 added seats over the reference year; 80% interval from the engine's Monte Carlo."
+  },
+  "vulnerability": {
+    "rows": [
+      {
+        "season": "Winter peak (Dec-Feb)",
+        "delta_nights": -212219.52510778047,
+        "delta_nights_interval": {
+          "lo80": -222470.74752485863,
+          "hi80": -207847.19832801764,
+          "lo95": -227165.85429311614,
+          "hi95": -204384.02909298125
+        },
+        "delta_guests": -60809.79264964629,
+        "season_nights": 3577091.3656192217,
+        "pct_of_season": -0.05932739855277464,
+        "most_affected": [
+          {
+            "market": "DE",
+            "name": "Germany",
+            "delta_nights": -26484.88868059333
+          },
+          {
+            "market": "GB",
+            "name": "United Kingdom",
+            "delta_nights": -26352.49378756735
+          },
+          {
+            "market": "IT",
+            "name": "Italy",
+            "delta_nights": -17989.082426437533
+          }
+        ]
+      },
+      {
+        "season": "Spring (Mar-May)",
+        "delta_nights": -155419.1417376008,
+        "delta_nights_interval": {
+          "lo80": -162681.83725679238,
+          "hi80": -152047.955667815,
+          "lo95": -166063.97345620365,
+          "hi95": -149822.0143043526
+        },
+        "delta_guests": -47397.13992827246,
+        "season_nights": 2696820.617382525,
+        "pct_of_season": -0.05763050784165511,
+        "most_affected": [
+          {
+            "market": "GB",
+            "name": "United Kingdom",
+            "delta_nights": -17713.470736600866
+          },
+          {
+            "market": "DE",
+            "name": "Germany",
+            "delta_nights": -17652.014961294393
+          },
+          {
+            "market": "IT",
+            "name": "Italy",
+            "delta_nights": -12685.799356147516
+          }
+        ]
+      },
+      {
+        "season": "Summer low (Jun-Aug)",
+        "delta_nights": -159547.1726660747,
+        "delta_nights_interval": {
+          "lo80": -167214.83398879674,
+          "hi80": -155031.47132782973,
+          "lo95": -170723.4671047312,
+          "hi95": -153099.47426026274
+        },
+        "delta_guests": -50573.29800176248,
+        "season_nights": 2517083.3147914596,
+        "pct_of_season": -0.0633857336896666,
+        "most_affected": [
+          {
+            "market": "SA",
+            "name": "Saudi Arabia",
+            "delta_nights": -16050.111703203547
+          },
+          {
+            "market": "GB",
+            "name": "United Kingdom",
+            "delta_nights": -14786.071131582692
+          },
+          {
+            "market": "DE",
+            "name": "Germany",
+            "delta_nights": -13605.958561110718
+          }
+        ]
+      },
+      {
+        "season": "Autumn (Sep-Nov)",
+        "delta_nights": -174336.34096222557,
+        "delta_nights_interval": {
+          "lo80": -182838.0983452402,
+          "hi80": -170606.91969608312,
+          "lo95": -186228.4301370521,
+          "hi95": -167900.25712013352
+        },
+        "delta_guests": -52286.273996652104,
+        "season_nights": 2967614.6642419593,
+        "pct_of_season": -0.05874628639050671,
+        "most_affected": [
+          {
+            "market": "DE",
+            "name": "Germany",
+            "delta_nights": -20852.86772628132
+          },
+          {
+            "market": "GB",
+            "name": "United Kingdom",
+            "delta_nights": -20589.027572552674
+          },
+          {
+            "market": "IT",
+            "name": "Italy",
+            "delta_nights": -14075.927835929266
+          }
+        ]
+      }
+    ],
+    "most_vulnerable": "Summer low (Jun-Aug)",
+    "method": "10% fewer weekly flights on every route in one season; change in hotel guest nights"
+  },
+  "planner_brief": {
+    "data_mode": "synthetic",
+    "sections": {
+      "best_routes": {
+        "title": "Best routes to grow",
+        "text": "Ranked by hotel guests gained per 1,000 extra seats: United States 558 (80%: 537 to 583); China 463 (80%: 438 to 521); Italy 462 (80%: 437 to 521). Lowest yield: Philippines 127, India 87, Pakistan 73. Seats into high-yield markets fill more hotel rooms than the same seats elsewhere."
+      },
+      "new_markets": {
+        "title": "New markets worth testing (cold-start estimates)",
+        "text": "No service today, so these borrow region-average behaviour and carry wide intervals: Canada 564 guests per 1,000 seats (80%: 317 to 842); South Korea 453 guests per 1,000 seats (80%: 234 to 816); Spain 362 guests per 1,000 seats (80%: 165 to 661). Treat them as hypotheses for a trial season, not forecasts."
+      },
+      "seasonal_risk": {
+        "title": "Seasonal risk",
+        "text": "A 10% capacity cut costs the most in Summer low (Jun-Aug): 159,547 guest nights (6.3% of that season). Most exposed markets: Saudi Arabia, United Kingdom, Germany."
+      },
+      "what_matters": {
+        "title": "What moves hotel demand most",
+        "text": "Across plausible ranges of all levers, length of stay explains the largest share of the variation in annual guest nights (total-order Sobol index 0.37), followed by seat capacity (frequency x aircraft size) (0.31) and hotel capture rate (0.14)."
+      },
+      "do_differently": {
+        "title": "What a DCT planner should do differently",
+        "bullets": [
+          "Rank route-development incentives by hotel guests per 1,000 seats, not by seats or passengers.",
+          "Protect summer low capacity on Saudi Arabia, United Kingdom first: that is where a capacity loss hurts hotels most.",
+          "Plan non-air demand separately: about 45% of hotel guests in the latest year do not depend on flights into Abu Dhabi, so airline deals cannot move them.",
+          "Agree one shared number with airports and airlines: use the simulator's central estimate for targets and its 80% range for staffing and inventory buffers.",
+          "Test new markets with a trial season and re-estimate after 6 to 12 months of data."
+        ]
+      },
+      "confidence": {
+        "title": "Confidence notes",
+        "text": "Back-tested on held-out months: WMAPE 6.5% on monthly hotel guests by market in the final holdout; 80% intervals covered 79% of outcomes and 95% intervals 91%. Cold-start and out-of-range scenarios carry wider intervals. All figures come from SYNTHETIC DEMO DATA with known ground truth and say nothing about real Abu Dhabi demand."
+      }
+    }
+  }
+}
