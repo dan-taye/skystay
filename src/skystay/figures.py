@@ -31,6 +31,7 @@ SEQ = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366
 DIV_NEG, DIV_MID, DIV_POS = "#e34948", "#f0efec", "#2a78d6"
 FONT = "system-ui, -apple-system, Segoe UI, sans-serif"
 BADGE_TEXT = "SYNTHETIC DEMO DATA"
+BADGE_ROW = 26  # px reserved above the title for the badge
 
 
 def layout(fig: go.Figure, title: str | None = None, height: int | None = None, legend: bool = True) -> go.Figure:
@@ -40,8 +41,10 @@ def layout(fig: go.Figure, title: str | None = None, height: int | None = None, 
         plot_bgcolor=SURFACE,
         font={"family": FONT, "color": INK_2, "size": 13},
         title={"text": title, "font": {"color": INK, "size": 16}, "x": 0.01, "xanchor": "left",
-               "yref": "container", "y": 0.985, "yanchor": "top"} if title else None,
-        margin={"l": 60, "r": 24, "t": (88 if legend else 60) if title else 40, "b": 48},
+               "yref": "container", "y": 1.0, "yanchor": "top",
+               "pad": {"t": BADGE_ROW + 8 if settings.is_synthetic() else 10}} if title else None,
+        margin={"l": 60, "r": 24, "b": 48,
+                "t": (BADGE_ROW if settings.is_synthetic() else 0) + (40 if title else 16) + (32 if legend else 6)},
         legend={"orientation": "h", "y": 1.0, "yanchor": "bottom", "x": 0, "font": {"color": INK_2},
                 "yref": "paper"},
         showlegend=legend,
@@ -68,7 +71,7 @@ def badge(fig: go.Figure) -> go.Figure:
         name="synthetic-badge", text=f"<b>{BADGE_TEXT}</b>", xref="paper", yref="paper", x=1, y=1,
         xanchor="right", yanchor="top", showarrow=False, font={"size": 11, "color": "#7a4b00"},
         bgcolor="#fff3d6", bordercolor="#eda100", borderwidth=1, borderpad=3,
-        yshift=max(int(fig.layout.margin.t or 40) - 8, 20),
+        yshift=int(fig.layout.margin.t or 40) - 4,
     )
     return fig
 

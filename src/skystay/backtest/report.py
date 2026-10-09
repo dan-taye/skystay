@@ -43,7 +43,7 @@ def fig_top10(chosen: pd.DataFrame, out: dict) -> go.Figure:
                                  hovertemplate="%{x|%b %Y}<br>Actual %{y:,.0f}<extra></extra>"), r, c)
         fig.add_vline(x=ho_start, line={"color": fx.AXIS, "dash": "dot", "width": 1}, row=r, col=c)
     fx.layout(fig, f"Hotel guests: actual vs back-test predictions, top 10 markets{_suffix(out)}", height=660)
-    fig.update_layout(margin={"t": 120, "b": 70}, legend={"y": 1.075})
+    fig.update_layout(margin={"t": 130, "b": 70}, legend={"y": 1.075})
     fig.update_yaxes(tickformat="~s")
     fig.update_annotations(font={"size": 12, "color": fx.INK_2})
     fig.add_annotation(text="Dotted line: start of the untouched 2025 holdout. Earlier years: rolling-origin folds.",
