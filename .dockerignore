@@ -1,0 +1,12 @@
+.git
+.venv
+venv
+data/processed
+data/synthetic/generated
+video/out
+deck/out
+demo
+**/__pycache__
+.pytest_cache
+.ruff_cache
+*.duckdb

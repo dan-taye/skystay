@@ -1,0 +1,7 @@
+services:
+  skystay:
+    build: .
+    image: skystay:local
+    ports:
+      - "127.0.0.1:8501:8501"   # bound to localhost only: nothing is published
+    restart: unless-stopped

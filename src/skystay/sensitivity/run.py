@@ -313,6 +313,9 @@ def run() -> dict:
         "guests_per_1000_seats": fig_per1000(out["per_1000_seats"]),
         "seasonal_vulnerability": fig_vulnerability(out["vulnerability"]),
     })
+    from skystay import docs
+
+    docs.write_all()
     top = out["sobol"]["factors"][0]
     print(f"top lever by total-order Sobol: {top['label']} (ST {top['ST']:.2f}); total {time.time() - t0:.0f}s")
     return out
