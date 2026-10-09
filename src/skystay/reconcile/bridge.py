@@ -52,12 +52,12 @@ def fit_K(ctx: dict, m_hat: np.ndarray, cm: np.ndarray, K0: np.ndarray, P: np.nd
     from skystay.chain.parametric import TREND_RIDGE, _trend_ridge, time_tau
 
     G, T, moy_t, s, cb = ctx["G"], ctx["T"], ctx["moy"], ctx["s"], ctx["cb"]
-    O, N = K0.shape
+    n_o, N = K0.shape
     n_t = G.shape[1]
     tau = time_tau(n_t)
     rw = np.ones(n_t) if row_w is None else np.sqrt(np.asarray(row_w, dtype=float))
     sb = s[moy_t - 1] * cb
-    K = np.zeros((O, N))
+    K = np.zeros((n_o, N))
     alpha = np.zeros(N)
     gamma = np.zeros(N)
     for j in range(N):

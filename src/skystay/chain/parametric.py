@@ -355,12 +355,12 @@ def fit(p: Panels, level: str = "L1", lam: float | None = None, bootstrap: int =
     global_lf = _global_moy(om, "lf", "seats")
     global_tr = _global_moy(om, "tr", "pax")
 
-    O = len(known)
-    lf = np.zeros((O, 12))
-    lf_se = np.zeros((O, 12))
-    tr = np.zeros((O, 12))
-    tr_se = np.zeros((O, 12))
-    origin_n = np.zeros(O)
+    n_o = len(known)
+    lf = np.zeros((n_o, 12))
+    lf_se = np.zeros((n_o, 12))
+    tr = np.zeros((n_o, 12))
+    tr_se = np.zeros((n_o, 12))
+    origin_n = np.zeros(n_o)
     hist_seats, hist_lf = {}, {}
     for i, o in enumerate(known):
         g = om[(om["origin"] == o) & (om["seats"] > 0)]
