@@ -78,7 +78,6 @@ class FastEval:
 
     def _eval(self, X: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         e, m = self.e, self.e.m
-        K = len(X)
         cap_s, dlf, dtr, capm, alosm, ev_add, ss, mix = (X[:, i] for i in range(8))
         S = self.S0[None] * cap_s[:, None, None]
         # seasonal shift: positive moves summer seats into winter, negative the reverse
