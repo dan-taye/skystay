@@ -300,6 +300,10 @@ def generate(out_dir: Path | None = None, cfg: dict | None = None) -> dict:
         "alos": {n: cfg["nationalities"][n]["alos"] for n in nats},
         "non_air_base_per_month": {n: cfg["nationalities"][n]["base"] for n in nats},
         "non_air_share": {n: float(base_tot[n_idx[n]] / (air_tot[n_idx[n]] + base_tot[n_idx[n]])) for n in nats},
+        "non_air_share_last12": {
+            n: float(base_t[n_idx[n], -12:].sum() / (air[n_idx[n], -12:].sum() + base_t[n_idx[n], -12:].sum()))
+            for n in nats
+        },
         "bridge_B": {o: {n: round(float(B[o_idx[o], n_idx[n]]), 6) for n in nats if B[o_idx[o], n_idx[n]] > 0} for o in origins},
         "effective_K": {o: {n: float(k_eff[o_idx[o], n_idx[n]]) for n in nats if k_eff[o_idx[o], n_idx[n]] > 0} for o in origins},
         "mix_diagonal": {o: float(mix[o_idx[o], n_idx[o]]) for o in origins},
