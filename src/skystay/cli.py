@@ -90,11 +90,21 @@ def cmd_test(args: argparse.Namespace) -> int:
     return subprocess.call([sys.executable, "-m", "pytest", "-q", *args.pytest_args], cwd=paths.ROOT)
 
 
-def cmd_video(_: argparse.Namespace) -> int:
+def cmd_video(args: argparse.Namespace) -> int:
     from skystay.video import build
 
     _banner("video")
-    return build.run()
+    if getattr(args, "remux", False):
+        return build.remux()
+    if getattr(args, "tts", False):
+        from skystay.video import voice
+
+        rc = build.run(record_again=not getattr(args, "no_record", False))
+        if rc == 0:
+            voice.run()
+            rc = build.remux()
+        return rc
+    return build.run(record_again=not getattr(args, "no_record", False))
 
 
 def cmd_deck(_: argparse.Namespace) -> int:
@@ -151,7 +161,11 @@ def main(argv: list[str] | None = None) -> int:
     p_test = sub.add_parser("test", help="run the test suite")
     p_test.add_argument("pytest_args", nargs=argparse.REMAINDER)
     p_test.set_defaults(fn=cmd_test)
-    sub.add_parser("video", help="record and assemble the demo video").set_defaults(fn=cmd_video)
+    p_vid = sub.add_parser("video", help="record and assemble the demo video")
+    p_vid.add_argument("--no-record", action="store_true", help="reuse the last recording (video/out/timeline.json)")
+    p_vid.add_argument("--tts", action="store_true", help="generate a placeholder text-to-speech voiceover (Windows)")
+    p_vid.add_argument("--remux", action="store_true", help="only re-attach video/voiceover.* to the encoded scenes")
+    p_vid.set_defaults(fn=cmd_video)
     sub.add_parser("deck", help="build the 10-page PDF deck").set_defaults(fn=cmd_deck)
     p_all = sub.add_parser("all", help="everything end to end")
     p_all.add_argument("--skip-media", action="store_true", help="skip video and deck")

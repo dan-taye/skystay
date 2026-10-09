@@ -1,4 +1,4 @@
-"""`skystay video`: record the app, render cards and captions, assemble with ffmpeg, verify, copy to demo/.
+﻿"""`skystay video`: record the app, render cards and captions, assemble with ffmpeg, verify, copy to demo/.
 
 ffmpeg: libx264, yuv420p, 30 fps, CRF 20, +faststart. Captions are Pillow-rendered
 overlays (the bundled ffmpeg may lack libass). Narration: video/narration_script.md
@@ -103,7 +103,7 @@ def card(kind: str, out: Path) -> Path:
         d.text((166, 620), "For Abu Dhabi tourism planning", font=font(46, bold=True), fill="#2a78d6")
         d.text((166, 700), f"Team: {team}", font=font(40), fill="#52514e")
     else:
-        d.text((160, 300), "Working prototype · reproducible · one command", font=font(70, bold=True),
+        d.text((160, 300), "Working prototype Â· reproducible Â· one command", font=font(70, bold=True),
                fill="#0b0b0b")
         d.rounded_rectangle((160, 430, 760, 520), radius=12, fill="#0b0b0b")
         d.text((196, 446), "skystay all", font=font(52, bold=True), fill="#ffffff")
@@ -148,7 +148,7 @@ def ff(*args: str) -> None:
         raise RuntimeError(f"ffmpeg failed: {res.stderr[-2000:]}")
 
 
-ENC = ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(FPS), "-crf", str(CRF), "-preset", "medium"]
+ENC = ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(FPS), "-crf", str(CRF), "-preset", "medium", "-threads", "2"]
 
 
 def seg_card(png: Path, dur: float, out: Path) -> Path:
@@ -181,8 +181,11 @@ def assemble(segments: list[Path], out: Path, voice: Path | None) -> Path:
     joined = out.parent / "joined.mp4"
     ff("-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(joined))
     if voice:
+        # pad/trim the audio to the exact video length (apad + -shortest never ends with a copied video stream)
+        dur = tools.probe_video(joined)["duration_s"]
         ff("-i", str(joined), "-i", str(voice), "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac",
-           "-b:a", "160k", "-af", "apad", "-shortest", "-movflags", "+faststart", str(out))
+           "-b:a", "160k", "-af", f"apad=whole_dur={dur:.3f}", "-t", f"{dur:.3f}", "-movflags", "+faststart",
+           str(out))
     else:
         ff("-i", str(joined), "-c", "copy", "-movflags", "+faststart", str(out))
     return out
@@ -200,29 +203,65 @@ def extract_frames(video: Path, times: list[tuple[str, float]], folder: Path) ->
 
 # ------------------------------------------------------------------ narration
 NARRATION = {
-    "title": "{product}: a flight-to-hotel demand simulator for the Department of Culture and Tourism, Abu Dhabi.",
-    "problem": "Flights are counted by departure country, hotels by guest nationality, and they are planned by "
-               "different teams. So nobody can say what a new route does to hotel demand.",
-    "system": "We turn the raw flight, traffic and hotel data into one store, fit a transparent conversion chain with "
-              "a machine-learning correction, and drive everything from a scenario engine.",
-    "chain": "Every step is visible: {chain_seats} seats from {chain_origin} become {chain_guests} hotel guests, "
-             "and each assumption has a source and an interval.",
-    "whatif_route": "Add a twice-weekly route from {new_route_origin}: about {new_route_delta} hotel guests a year, "
-                    "with an eighty-percent range of {new_route_lo} to {new_route_hi}, by month and by market.",
-    "whatif_winter": "Cut winter frequency on {winter_market} by thirty percent and we lose {winter_delta} hotel "
-                     "guests, concentrated in the peak months.",
-    "sensitivity": "Sensitivity analysis shows what matters most: {sobol_1}, {sobol_2} and {sobol_3}.",
-    "validation": "We back-test on held-out months: {wmape} error against {naive} for a seasonal-naive baseline, "
-                  "with calibrated uncertainty.",
+    "title": "{product}: from flights to hotel guests.",
+    "problem": "Flights count departure country; hotels count nationality. So what does a new route do for hotels?",
+    "system": "We load flights, traffic and hotel data into one store, fit a transparent conversion chain with a "
+              "machine-learning correction, and drive it all from a scenario engine.",
+    "chain": "Every step is visible: {chain_seats_spoken} seats from the {chain_origin_spoken} become about "
+             "{chain_guests_spoken} hotel guests, and each assumption has a source and a range.",
+    "whatif_route": "Add a twice-weekly route from {new_route_origin}, which has no service today. Hotel guests rise "
+                    "by about {new_route_spoken} a year, with an eighty percent range of {new_route_lo_spoken} to "
+                    "{new_route_hi_spoken}, shown by month and by market.",
+    "whatif_winter": "Cut winter flights from the {winter_market_spoken} by thirty percent, and we lose about "
+                     "{winter_spoken} hotel guests, concentrated in the peak months.",
+    "sensitivity": "Sensitivity analysis shows what matters most: {sobol_1}, {sobol_2}, and {sobol_3}.",
+    "validation": "On held-out months the error is {wmape_spoken}, against {naive_spoken} for a seasonal-naive "
+                  "baseline, with calibrated ranges.",
     "brief": "The planner brief turns this into decisions: rank routes by hotel guests per thousand seats, protect "
              "the most exposed season, and plan non-air demand separately.",
-    "end": "A working prototype, reproducible with one command.{synthetic_note}",
+    "end": "Reproducible with one command.{synthetic_note}",
 }
 
 
+def spoken(x: float) -> str:
+    """Round to 3 significant figures for speech (e.g. 17,160 -> 17,200)."""
+    x = abs(float(x))
+    if x < 100:
+        return f"{x:.0f}"
+    mag = 10 ** (len(str(int(x))) - 3)
+    return f"{round(x / mag) * mag:,.0f}"
+
+
+def spoken_values(vals: dict) -> dict:
+    def num(k):
+        return float(str(vals[k]).replace(",", "").replace("+", "").replace("%", ""))
+
+    def place(name):
+        return f"{name}" if name not in ("United Kingdom", "United States") else name
+
+    return {
+        **vals,
+        "product": settings.product_name(),
+        "synthetic_note": " Shown on synthetic demo data." if settings.is_synthetic() else "",
+        "chain_seats_spoken": spoken(num("chain_seats")),
+        "chain_guests_spoken": spoken(num("chain_guests")),
+        "chain_origin_spoken": place(vals["chain_origin"]),
+        "new_route_spoken": spoken(num("new_route_delta")),
+        "new_route_lo_spoken": spoken(num("new_route_lo")),
+        "new_route_hi_spoken": spoken(num("new_route_hi")),
+        "winter_spoken": spoken(num("winter_delta")),
+        "winter_market_spoken": place(vals["winter_market"]),
+        "wmape_spoken": f"{num('wmape'):.1f} percent",
+        "naive_spoken": f"{num('naive'):.1f} percent",
+    }
+
+
+def narration_lines(scenes: list[dict], vals: dict) -> list[str]:
+    sv = spoken_values(vals)
+    return [NARRATION.get(sc["id"], "").format(**sv) for sc in scenes]
+
+
 def write_narration(scenes: list[dict], durations: list[float], vals: dict) -> Path:
-    vals = {**vals, "product": settings.product_name(),
-            "synthetic_note": " Shown here on synthetic demo data." if settings.is_synthetic() else ""}
     L = ["# Narration script", "",
          "Read in your own voice. Aim for about 2.3 words per second and stay within each time window. Record one "
          "take as `video/voiceover.m4a` (or .mp3/.wav), upload it to the `video` folder on GitHub, then re-run "
@@ -231,8 +270,7 @@ def write_narration(scenes: list[dict], durations: list[float], vals: dict) -> P
         L += ["> Synthetic mode: please say once that the figures are synthetic demo data (the end-card line does).", ""]
     L += ["| Time | Scene | Line |", "| :- | :- | :- |"]
     t = 0.0
-    for sc, d in zip(scenes, durations, strict=True):
-        line = NARRATION.get(sc["id"], "").format(**vals)
+    for sc, d, line in zip(scenes, durations, narration_lines(scenes, vals), strict=True):
         L.append(f"| {int(t // 60)}:{t % 60:04.1f} to {int((t + d) // 60)}:{(t + d) % 60:04.1f} | {sc['id']} | {line} |")
         t += d
     out = paths.VIDEO / "narration_script.md"
@@ -284,6 +322,12 @@ def run(record_again: bool = True) -> int:
     final = paths.VIDEO_OUT / f"{product}_demo.mp4"
     voice = find_voiceover()
     assemble(segments, final, voice)
+    return finalize(final, voice, scenes, durations, vals, caps)
+
+
+def finalize(final: Path, voice: Path | None, scenes: list[dict], durations: list[float], vals: dict,
+             caps: dict) -> int:
+    """Probe, extract one frame per scene, write the narration script and report; copy to demo/ if it passes."""
     info = tools.probe_video(final)
     mids, t = [], 0.0
     for sc, d in zip(scenes, durations, strict=True):
@@ -299,16 +343,33 @@ def run(record_again: bool = True) -> int:
         "audio_iff_voiceover": info["has_audio"] == bool(voice),
     }
     report = {"path": str(final.relative_to(paths.ROOT)), **info, "voiceover": str(voice) if voice else None,
-              "checks": checks, "captions": caps, "scene_durations": dict(zip([s["id"] for s in scenes],
-                                                                              np.round(durations, 2).tolist(),
-                                                                              strict=True)),
+              "checks": checks, "captions": caps,
+              "scene_durations": dict(zip([s["id"] for s in scenes], np.round(durations, 2).tolist(), strict=True)),
               "frames": [str(f.relative_to(paths.ROOT)) for f in frames]}
     (paths.VIDEO_OUT / "video_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print(json.dumps({k: report[k] for k in ("path", "duration_s", "width", "height", "codec", "size_mb", "checks")},
-                     indent=1))
+    print(json.dumps({k: report[k] for k in ("path", "duration_s", "width", "height", "codec", "size_mb", "has_audio",
+                                             "checks")}, indent=1))
     if all(checks.values()):
         shutil.copy2(final, paths.DEMO / final.name)
         print(f"copied to demo/{final.name}")
         return 0
     print("video checks failed: NOT copied to demo/")
     return 1
+
+
+def remux() -> int:
+    """Re-attach the voiceover to the already-encoded scene segments (no re-encoding: low memory, seconds)."""
+    spec = yaml.safe_load((paths.VIDEO / "demo_script.yaml").read_text(encoding="utf-8"))
+    scenes = spec["scenes"]
+    work = paths.VIDEO_OUT / "work"
+    segments = [work / f"seg_{k:02d}_{sc['id']}.mp4" for k, sc in enumerate(scenes)]
+    missing = [s.name for s in segments if not s.exists()]
+    if missing:
+        raise FileNotFoundError(f"encoded segments missing ({missing}): run `skystay video` first")
+    rep = json.loads((paths.VIDEO_OUT / "video_report.json").read_text(encoding="utf-8"))
+    durations = [float(rep["scene_durations"][sc["id"]]) for sc in scenes]
+    vals = caption_values()
+    final = paths.VIDEO_OUT / f"{settings.product_name()}_demo.mp4"
+    voice = find_voiceover()
+    assemble(segments, final, voice)
+    return finalize(final, voice, scenes, durations, vals, rep.get("captions", {}))
