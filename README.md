@@ -135,4 +135,4 @@ Full details: `reports/backtest.md`, `reports/metrics.json`, `reports/sensitivit
 ## Notes
 
 - Everything here runs on the synthetic stand-in data.
-- `docs/MODEL_CARD.md` and `docs/ASSUMPTIONS.md` explain every component.
+- The demo video and the PDF deck are in `demo/` (the video has a placeholder synthetic voiceover).

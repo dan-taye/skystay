@@ -1,4 +1,4 @@
-﻿"""`skystay video`: record the app, render cards and captions, assemble with ffmpeg, verify, copy to demo/.
+"""`skystay video`: record the app, render cards and captions, assemble with ffmpeg, verify, copy to demo/.
 
 ffmpeg: libx264, yuv420p, 30 fps, CRF 20, +faststart. Captions are Pillow-rendered
 overlays (the bundled ffmpeg may lack libass). Narration: video/narration_script.md
@@ -96,14 +96,13 @@ def card(kind: str, out: Path) -> Path:
     d = ImageDraw.Draw(img)
     d.rectangle((0, 0, W, 14), fill="#2a78d6")
     product = settings.product_name()
-    team = settings.team_name()
     if kind == "title":
         d.text((160, 330), product, font=font(140, bold=True), fill="#0b0b0b")
         d.text((166, 520), "Flight-to-hotel demand scenario simulator", font=font(56), fill="#52514e")
         d.text((166, 620), "For Abu Dhabi tourism planning", font=font(46, bold=True), fill="#2a78d6")
-        d.text((166, 700), f"Team: {team}", font=font(40), fill="#52514e")
+        d.text((166, 700), settings.byline(), font=font(40), fill="#52514e")
     else:
-        d.text((160, 300), "Working prototype Â· reproducible Â· one command", font=font(70, bold=True),
+        d.text((160, 300), "Working prototype · reproducible · one command", font=font(70, bold=True),
                fill="#0b0b0b")
         d.rounded_rectangle((160, 430, 760, 520), radius=12, fill="#0b0b0b")
         d.text((196, 446), "skystay all", font=font(52, bold=True), fill="#ffffff")
@@ -114,8 +113,7 @@ def card(kind: str, out: Path) -> Path:
             lines.append("Swap in real data and re-run to get real results.")
         for k, ln in enumerate(lines):
             d.text((166, 590 + k * 64), ln, font=font(40), fill="#52514e")
-        d.text((166, 900), f"{product}  ·  Team: {team}", font=font(34),
-               fill="#898781")
+        d.text((166, 900), f"{product}  ·  {settings.byline()}", font=font(34), fill="#898781")
     if settings.is_synthetic():
         _badge(d, W - 40, 40, 1.3)
     img.save(out)

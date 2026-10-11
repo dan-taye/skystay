@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ product }} · flight-to-hotel demand simulator</title>
+<style>{{ css | safe }}</style>
+</head>
+<body>
+{% macro chrome(n) -%}
+<div class="bar"></div>
+{% if syn %}<div class="badge">SYNTHETIC DEMO DATA</div>{% endif %}
+<div class="footer"><span>{{ product }} · Flight-to-hotel demand simulator · {{ byline }}</span>
+<span>{% if syn %}All figures: synthetic data with known ground truth · {% endif %}{{ n }} / 10</span></div>
+{%- endmacro %}
+
+<!-- 1 · Title -->
+<section class="slide title-slide">
+  {{ chrome(1) }}
+  <div style="margin-top:150px">
+    <h1>{{ product }}</h1>
+    <div class="sub">From flights to hotel guests: a scenario simulator for Abu Dhabi</div>
+    <div class="track">{{ byline }}</div>
+  </div>
+  <div class="cols c2" style="margin-top:70px; max-width:1500px">
+    <div>
+      <h3>The idea</h3>
+      <p class="small">Abu Dhabi plans flights and hotels with different numbers. SkyStay connects air capacity to
+        hotel demand, so a planner can ask "what if" and get an answer with honest ranges.</p>
+    </div>
+    <div class="card small">
+      <p style="margin:0">A working prototype: data pipeline, three model layers, back-testing with calibrated uncertainty,
+      a scenario engine with {{ n_levers }} levers, an 8-page simulator app, and a plain-language planner brief.
+      Reproducible with one command: <span class="code">skystay all</span></p>
+      {% if syn %}<p class="small" style="margin:12px 0 0 0; color:#7a4b00">Shown on synthetic demo data with known
+      ground truth: the method is demonstrated, not real Abu Dhabi figures.</p>{% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Problem -->
+<section class="slide">
+  {{ chrome(2) }}
+  <div class="kicker">The problem</div>
+  <h1>Flights and hotels are planned with different numbers, and nothing links them</h1>
+  <div class="cols c55">
+    <div>
+      <ul>
+        <li><b>Only some arriving passengers become hotel guests.</b> Many are transferring onward, returning
+          residents, or staying with friends and family.</li>
+        <li><b>The two datasets disagree on "country".</b> Flights record the <i>departure country</i>; hotels record
+          the guest's <i>nationality</i>. A London flight carries many nationalities.</li>
+        <li><b>Separate teams, separate numbers.</b> Route development and hotel planning have no shared model, so
+          capacity decisions are made without knowing what they do to hotel demand.</li>
+        <li><b>The share that converts changes</b> by source market and by season, so a single ratio is wrong.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What planners cannot answer today</h2>
+      <div class="q">How many hotel guests would a new route bring, from a country with no service today, and in which months?</div>
+      <div class="q">What do hotels lose if a top market cuts winter frequency by 30%?</div>
+      <div class="q">Which markets fill the most hotel rooms per seat, so incentives go where they matter?</div>
+      <div class="q">How confident can we be, and which assumption drives the answer?</div>
+    </div>
+  </div>
+  <div class="chain">
+    <div class="step">Scheduled seats</div><div class="op">× load factor</div>
+    <div class="step">Passengers</div><div class="op">− transfer / transit</div>
+    <div class="step">Visitors by nationality</div><div class="op">× hotel capture<br>+ non-air guests</div>
+    <div class="step">Hotel guests</div><div class="op">× length of stay</div>
+    <div class="step">Guest nights</div>
+  </div>
+</section>
+
+<!-- 3 · Data and the country catch -->
+<section class="slide">
+  {{ chrome(3) }}
+  <div class="kicker">Data and the country catch</div>
+  <h1>Departure country ≠ nationality: the back-test chooses how to reconcile them</h1>
+  <div class="cols" style="grid-template-columns: 1.05fr 1fr; gap:40px">
+    <div>
+      <table class="small">
+        <tr><th>Input ({{ dq.first }} to {{ dq.last }}, {{ dq.n_months }} months)</th><th>Grain</th></tr>
+        <tr><td>Flight schedule</td><td>route × day · {{ dq.origin_countries }} countries, {{ dq.origin_airports }} airports</td></tr>
+        <tr><td>Passenger traffic</td><td>airport × month · arrivals, transfers</td></tr>
+        <tr><td>Hotel performance</td><td>nationality × month · {{ dq.nationalities }} nationalities</td></tr>
+        <tr><td>Calendars</td><td>{{ dq.events }} events · holidays · seasonality</td></tr>
+      </table>
+      <p class="small" style="margin:10px 0 22px 0">Quality checks flagged {{ dq.flags }} records (missing months,
+        duplicates, load factor above 100%): all logged, none dropped silently.</p>
+      <table class="small">
+        <tr><th>Reconciliation level</th><th class="num">Chain CV</th><th class="num">Hybrid CV</th><th class="num">Hybrid holdout</th></tr>
+        {% for r in recon %}
+        <tr class="{{ 'hl' if r.chosen else '' }}"><td>{{ r.label }}</td><td class="num">{{ r.par_cv }}</td>
+          <td class="num">{{ r.hyb_cv }}</td><td class="num">{{ r.hyb_ho }}</td></tr>
+        {% endfor %}
+      </table>
+      <ul class="small" style="margin-top:14px">
+        <li><b>L0:</b> origin country = nationality (naive). <b>L1:</b> both sides grouped into {{ n_regions }} regions.</li>
+        <li><b>L2:</b> a learned non-negative origin → nationality matrix, ridge-pulled toward a prior, plausible
+          pairs only (same region + hubs), year-block bootstrap intervals.</li>
+      </ul>
+      <p class="small"><b>The back-test chose {{ sel.level_label }}</b> (WMAPE on monthly hotel guests by market).</p>
+    </div>
+    <div>
+      <img class="shot" src="{{ imgs.bridge }}" style="max-height:690px; object-fit:contain; object-position:top">
+      <div class="cap">Learned bridge: share of each origin's hotel guests by nationality (rows sum to 100%).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · Solution: the conversion chain -->
+<section class="slide">
+  {{ chrome(4) }}
+  <div class="kicker">The solution</div>
+  <h1>A transparent conversion chain: every step visible, sourced and adjustable</h1>
+  <div class="cols c64">
+    <div>
+      <img class="shot" src="{{ imgs.sankey }}">
+      <div class="cap">The simulator's Conversion chain page: {{ chain.origin }} flights, reference year. Hotel guests
+        include other nationalities carried by the route (the learned bridge).</div>
+    </div>
+    <div>
+      <h2>Assumptions for {{ chain.origin }} (estimated from data)</h2>
+      <table class="small">
+        <tr><th>Step</th><th class="num">Value</th><th class="num">80% interval</th></tr>
+        <tr><td>Load factor</td><td class="num">{{ chain.lf }}</td><td class="num">{{ chain.lf_iv }}</td></tr>
+        <tr><td>Transfer / transit share</td><td class="num">{{ chain.tr }}</td><td class="num">{{ chain.tr_iv }}</td></tr>
+        <tr><td>Hotel capture ({{ chain.nat }} nationals)</td><td class="num">{{ chain.cap }}</td><td class="num">{{ chain.cap_iv }}</td></tr>
+        <tr><td>Length of stay (nights)</td><td class="num">{{ chain.alos }}</td><td class="num">{{ chain.alos_iv }}</td></tr>
+        <tr><td>Non-air share of guests</td><td class="num">{{ chain.nonair }}</td><td class="num">not a lever</td></tr>
+      </table>
+      <p class="small" style="margin-top:16px">Every assumption sits in <b>config/assumptions.yaml</b> with value, unit,
+        80% interval, n_obs, method, source and an adjustable flag. Empirical-Bayes shrinkage by month; thin and
+        new markets borrow from their region (<i>cold start</i>).</p>
+      <p class="small"><b>Non-air demand</b> (UAE residents, land arrivals, other UAE airports) is estimated from data:
+        {{ model.nonair_total }} of guests in the latest year. Flight levers never move it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · System design -->
+<section class="slide">
+  {{ chrome(5) }}
+  <div class="kicker">System design</div>
+  <h1>From raw aggregates to a what-if answer in one pipeline</h1>
+  <div class="svgwrap">{{ svg | safe }}</div>
+  <div class="cols c3" style="margin-top:18px">
+    <div class="small"><b>Stack:</b> Python, DuckDB, statsmodels, LightGBM, SHAP, SALib, Streamlit, Plotly,
+      Playwright. Runs on a laptop.</div>
+    <div class="small"><b>Speed:</b> a 12-month scenario with {{ draws }} Monte Carlo draws runs in about
+      {{ speed_ms }} ms, so every slider move updates instantly.</div>
+    <div class="small"><b>Guarantees:</b> {{ n_tests }} automated tests, including no leakage, parameter recovery,
+      monotone response to seats and bridge locality.</div>
+  </div>
+</section>
+
+<!-- 6 · Model and validation -->
+<section class="slide">
+  {{ chrome(6) }}
+  <div class="kicker">Model and validation{% if syn %} (on synthetic data with known ground truth){% endif %}</div>
+  <h1>Back-tested on held-out years: the hybrid beats every baseline</h1>
+  <div class="cols c4" style="gap:22px; margin-bottom:22px">
+    <div class="tile"><div class="lab">Holdout WMAPE, hotel guests</div><div class="val good">{{ ho.wmape }}</div>
+      <div class="sub">monthly, by market · seasonal naive {{ naive_ho }}</div></div>
+    <div class="tile"><div class="lab">Holdout WMAPE, guest nights</div><div class="val">{{ ho.nights }}</div>
+      <div class="sub">bias {{ ho.bias }} on guests</div></div>
+    <div class="tile"><div class="lab">Interval coverage</div><div class="val">{{ cov80 }} / {{ cov95 }}</div>
+      <div class="sub">of holdout months inside the 80% / 95% ranges</div></div>
+    <div class="tile"><div class="lab">Parameter recovery</div><div class="val">{{ rec.passed }}/{{ rec.total }}</div>
+      <div class="sub">known synthetic parameters recovered within tolerance</div></div>
+  </div>
+  <div class="cols c55" style="gap:34px">
+    <div><img class="fig" src="{{ imgs.top10 }}"></div>
+    <div>
+      <table class="small">
+        <tr><th>Model ({{ sel.level_label }})</th><th class="num">CV</th><th class="num">Holdout</th></tr>
+        {% for r in models %}
+        <tr class="{{ 'hl' if r.chosen else '' }}"><td>{{ r.label }}</td><td class="num">{{ r.cv }}</td><td class="num">{{ r.ho }}</td></tr>
+        {% endfor %}
+      </table>
+      <p class="small" style="margin-top:12px">WMAPE = Σ|actual − predicted| / Σ actual, monthly hotel guests by market.
+        Three rolling-origin folds (test {{ folds }}), refit on pre-cutoff data only; {{ holdout }} scored once.
+        Intervals: split-conformal on out-of-fold residuals.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · Sensitivity -->
+<section class="slide">
+  {{ chrome(7) }}
+  <div class="kicker">Sensitivity</div>
+  <h1>What moves hotel demand most, and which routes fill the most rooms</h1>
+  <div class="cols c2" style="gap:34px">
+    <div>
+      <img class="fig" src="{{ imgs.sobol }}">
+      <p class="small" style="margin-top:12px"><b>Global (Sobol, {{ sobol_runs }} model runs):</b> {{ sob[0].label|lower }}
+        explains {{ sob[0].ST }} of the variance in annual guest nights, then {{ sob[1].label|lower }} ({{ sob[1].ST }})
+        and {{ sob[2].label|lower }} ({{ sob[2].ST }}). A one-at-a-time tornado (±10% and ±1 SD) is in the app.</p>
+    </div>
+    <div>
+      <h2>Hotel guests per 1,000 added seats</h2>
+      <table class="small">
+        <tr><th>Market</th><th class="num">Guests / 1,000 seats</th><th class="num">80% range</th></tr>
+        {% for r in per1000_top %}<tr><td>{{ r.name }}</td><td class="num">{{ r.v }}</td><td class="num">{{ r.iv }}</td></tr>{% endfor %}
+        <tr><td colspan="3" class="muted" style="font-size:18px">… lowest yield</td></tr>
+        {% for r in per1000_low %}<tr><td>{{ r.name }}</td><td class="num">{{ r.v }}</td><td class="num">{{ r.iv }}</td></tr>{% endfor %}
+      </table>
+      <p class="small" style="margin-top:14px"><b>New markets (cold-start estimates):</b>
+        {% for r in per1000_cold %}{{ r.name }} {{ r.v }} ({{ r.iv }}){% if not loop.last %}; {% endif %}{% endfor %}.</p>
+      <p class="small"><b>Seasonal vulnerability:</b> a 10% capacity cut costs most in {{ vul.season }}:
+        {{ vul.nights }} guest nights ({{ vul.pct }} of the season).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · Demo screens -->
+<section class="slide">
+  {{ chrome(8) }}
+  <div class="kicker">Working prototype</div>
+  <h1>Change a lever, see hotel guests and nights move, with honest ranges</h1>
+  <div class="cols c2" style="gap:36px">
+    <div><img class="shot" src="{{ imgs.sim }}" style="max-height:600px; object-fit:contain; object-position:top left">
+      <div class="cap"><b>Scenario simulator.</b> New 2x-weekly route from {{ nr.origin }}: {{ nr.delta }} hotel guests a year
+        (80%: {{ nr.lo }} to {{ nr.hi }}), by month with ranges, flagged as a cold-start estimate.</div></div>
+    <div><img class="shot" src="{{ imgs.ab }}" style="max-height:600px; object-fit:contain; object-position:top left">
+      <div class="cap"><b>Scenario A vs B.</b> The same route at 2 vs 7 flights a week, side by side and month by
+        month with 80% ranges; results export as CSV and the scenario as JSON.</div></div>
+  </div>
+  <p class="small" style="margin-top:16px">Also in the app: winter frequency cut on {{ wc.market }} (−30%):
+    {{ wc.delta }} hotel guests; guardrails reject impossible inputs (load factor above 100%) and warn when a lever
+    leaves the historical range.</p>
+</section>
+
+<!-- 9 · Impact and use plan -->
+<section class="slide">
+  {{ chrome(9) }}
+  <div class="kicker">Impact and real-life use plan</div>
+  <h1>One shared number for airports, airlines and hotel planners</h1>
+  <div class="cols c4" style="gap:22px">
+    <div class="card"><h3>Who uses it</h3><p class="small">DCT tourism planning and route-development teams, with
+      Abu Dhabi Airports and partner airlines working from the same numbers.</p></div>
+    <div class="card"><h3>Decisions it changes</h3><p class="small">Which routes to incentivise, how much capacity to
+      protect each season, where to aim source-market campaigns, what hotel demand to staff for.</p></div>
+    <div class="card"><h3>Deployment path</h3><p class="small">Load real data → re-run the back-test on
+      real history → monthly refresh with one command; Docker image for internal hosting.</p></div>
+    <div class="card"><h3>Next steps</h3><p class="small">Run on real tourism data, review the assumption ledger
+      with domain experts, add hotel-capacity and price signals, then pilot on one planning cycle.</p></div>
+  </div>
+  <div class="cols" style="grid-template-columns: 1fr 1fr; gap:36px; margin-top:28px">
+    <div>
+      <h2>What a planner should do differently</h2>
+      <ul class="small">{% for b in bullets %}<li>{{ b }}</li>{% endfor %}</ul>
+    </div>
+    <div><img class="shot" src="{{ imgs.brief }}" style="max-height:440px; object-fit:cover; object-position:top left">
+      <div class="cap"><b>Planner brief</b> page: plain-language findings generated from the reports by a fixed template.</div></div>
+  </div>
+</section>
+
+<!-- 10 · Feasibility, limitations, reproducibility, next steps -->
+<section class="slide">
+  {{ chrome(10) }}
+  <div class="kicker">Feasibility, limitations and reproducibility</div>
+  <h1>Built to be checked: honest limits, one command, clear next steps</h1>
+  <div class="cols c2" style="gap:30px">
+    <div class="card"><h3>Limitations (full list: docs/LIMITATIONS.md)</h3>
+      <ul class="small">
+        {% if syn %}<li>Synthetic data until real data is available: accuracy on real data is unknown.</li>{% endif %}
+        <li>Air vs non-air demand is only weakly separable (median non-air error {{ rec.nonair }} on synthetic truth).</li>
+        <li>Returning residents are folded into capture; new routes are cold-start estimates without diversion.</li>
+        <li>Intervals calibrated on three folds: 95% range covered {{ cov95 }} of holdout months.</li>
+      </ul></div>
+    <div class="card"><h3>Reproducibility</h3>
+      <ul class="small">
+        <li><span class="code">skystay all</span> rebuilds data, back-test, model, sensitivity, video and deck (seed 42).</li>
+        <li>Swap in real data: edit config/schema_map.yaml, re-run; the synthetic badge disappears.</li>
+        <li>{{ n_tests }} tests: leakage, parameter recovery, golden scenarios, app smoke tests. Docker image included.</li>
+      </ul></div>
+    <div class="card"><h3>Feasibility</h3>
+      <ul class="small">
+        <li>Uses aggregated data only; no personal data.</li>
+        <li>Open-source stack, runs on a laptop; scenario answers in about {{ speed_ms }} ms.</li>
+        <li>Every number in this deck and the video is generated from the pipeline's reports.</li>
+      </ul></div>
+    <div class="card"><h3>What's next</h3>
+      <ul class="small">
+        <li>Real data: map the files in config/schema_map.yaml and re-run the back-test.</li>
+        <li>Model diversion from hub routes when a direct route opens; add hotel capacity and price.</li>
+        <li>Longer calibration history for the intervals; a recorded human voiceover for the demo.</li>
+      </ul></div>
+  </div>
+</section>
+</body>
+</html>

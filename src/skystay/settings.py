@@ -111,3 +111,16 @@ def team_members() -> list[dict[str, str]]:
             }
         )
     return out
+
+
+def is_personal() -> bool:
+    return str(load_team().get("project_type", "team")).strip().lower() == "personal"
+
+
+def author() -> str:
+    return str(load_team().get("author") or "").strip() or TBC
+
+
+def byline() -> str:
+    """'A personal project by <author>' or 'Team: <name>'."""
+    return f"A personal project by {author()}" if is_personal() else f"Team: {team_name()}"

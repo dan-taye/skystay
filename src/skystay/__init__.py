@@ -1,1 +1,1 @@
-﻿"""SkyStay: flight-to-hotel demand scenario simulator."""
+"""SkyStay: flight-to-hotel demand scenario simulator."""

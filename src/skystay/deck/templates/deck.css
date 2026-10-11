@@ -1,0 +1,53 @@
+@page { size: 1920px 1080px; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #e9e8e3; }
+body { font-family: "Segoe UI", system-ui, -apple-system, "DejaVu Sans", sans-serif; color: #0b0b0b; }
+.slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; background: #fcfcfb;
+  page-break-after: always; break-after: page; padding: 70px 96px 90px 96px; }
+.slide:last-child { page-break-after: auto; break-after: auto; }
+.bar { position: absolute; top: 0; left: 0; right: 0; height: 12px; background: #2a78d6; }
+.kicker { font-size: 22px; font-weight: 700; color: #2a78d6; letter-spacing: 0.06em; text-transform: uppercase;
+  margin: 0 0 8px 0; }
+h1 { font-size: 54px; line-height: 1.12; margin: 0 0 26px 0; font-weight: 750; letter-spacing: -0.01em; max-width: 1450px; }
+h2 { font-size: 30px; margin: 0 0 14px 0; font-weight: 700; }
+h3 { font-size: 25px; margin: 0 0 10px 0; font-weight: 700; color: #184f95; }
+p, li { font-size: 25px; line-height: 1.42; color: #232321; }
+ul { margin: 0; padding-left: 30px; } li { margin-bottom: 10px; }
+.muted { color: #6b6a65; }
+.small, .small li, .small p { font-size: 20px; line-height: 1.38; }
+.badge { position: absolute; top: 34px; right: 52px; background: #fff3d6; color: #7a4b00; border: 2px solid #eda100;
+  border-radius: 8px; padding: 6px 14px; font-weight: 800; font-size: 19px; letter-spacing: 0.05em; }
+.footer { position: absolute; left: 96px; right: 96px; bottom: 30px; display: flex; justify-content: space-between;
+  font-size: 17px; color: #898781; border-top: 1px solid #e1e0d9; padding-top: 10px; }
+.cols { display: grid; gap: 44px; }
+.c2 { grid-template-columns: 1fr 1fr; } .c3 { grid-template-columns: 1fr 1fr 1fr; } .c4 { grid-template-columns: repeat(4, 1fr); }
+.c55 { grid-template-columns: 1.25fr 1fr; } .c64 { grid-template-columns: 1.5fr 1fr; } .c46 { grid-template-columns: 1fr 1.4fr; }
+.card { background: #ffffff; border: 1.5px solid rgba(11,11,11,0.10); border-radius: 14px; padding: 22px 26px; }
+.card.accent { border-color: #2a78d6; background: #f3f8fe; }
+.tile { background: #ffffff; border: 1.5px solid rgba(11,11,11,0.10); border-radius: 14px; padding: 18px 22px; }
+.tile .lab { font-size: 19px; color: #52514e; }
+.tile .val { font-size: 46px; font-weight: 750; line-height: 1.15; margin-top: 4px; }
+.tile .sub { font-size: 17px; color: #898781; margin-top: 4px; }
+.good { color: #006300; } .bad { color: #b42318; }
+table { border-collapse: collapse; width: 100%; font-size: 21px; }
+th { text-align: left; color: #52514e; font-weight: 600; border-bottom: 2px solid #c3c2b7; padding: 8px 10px; }
+td { border-bottom: 1px solid #e1e0d9; padding: 8px 10px; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr.hl td { background: #eef4fc; font-weight: 700; }
+img.fig { width: 100%; display: block; border-radius: 10px; border: 1px solid #e1e0d9; background: #fff; }
+.shot { width: 100%; display: block; border-radius: 10px; border: 1.5px solid #c3c2b7; box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+.cap { font-size: 18px; color: #52514e; margin-top: 8px; line-height: 1.35; }
+.chain { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+.chain .step { flex: 1; background: #ffffff; border: 2px solid #2a78d6; border-radius: 12px; padding: 14px 12px;
+  text-align: center; font-size: 22px; font-weight: 700; color: #184f95; }
+.chain .op { font-size: 17px; color: #52514e; text-align: center; min-width: 120px; }
+.title-slide h1 { font-size: 132px; margin: 0; letter-spacing: -0.02em; }
+.title-slide .sub { font-size: 46px; color: #52514e; margin-top: 6px; }
+.title-slide .track { font-size: 36px; color: #2a78d6; font-weight: 700; margin-top: 40px; }
+.q { background: #ffffff; border-left: 6px solid #eda100; border-radius: 8px; padding: 14px 20px; margin-bottom: 14px;
+  font-size: 24px; line-height: 1.35; }
+.svgwrap svg { width: 100%; height: auto; }
+.pill { display: inline-block; background: #e8f0fb; color: #184f95; border-radius: 999px; padding: 4px 14px;
+  font-size: 18px; margin: 0 6px 6px 0; font-weight: 600; }
+code, .code { font-family: Consolas, "DejaVu Sans Mono", monospace; background: #0b0b0b; color: #fff; padding: 4px 12px;
+  border-radius: 6px; font-size: 24px; }
