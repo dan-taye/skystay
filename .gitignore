@@ -2,7 +2,10 @@
 .venv/
 venv/
 
-# Regenerable data (data/raw/ is intentionally NOT ignored: real data lives in this private repo)
+# Real data never goes into this public repo
+data/raw/
+
+# Regenerable data
 data/processed/
 data/synthetic/generated/
 *.duckdb

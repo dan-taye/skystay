@@ -118,7 +118,7 @@ Full details: `reports/backtest.md`, `reports/metrics.json`, `reports/sensitivit
 
 ## Using real data
 
-1. Put the raw files (flight schedule, passenger traffic, hotel performance, calendars and their data dictionary) in `data/raw/`.
+1. Put the raw files (flight schedule, passenger traffic, hotel performance, calendars and their data dictionary) in `data/raw/`. The folder is git-ignored, so real data is never committed to this public repo.
 2. Edit `config/schema_map.yaml` so file patterns and column names match the dictionary. Adapters fail loudly and name any unmapped column or unknown country label; add country aliases to `config/regions.yaml`.
 3. Run `skystay all`. The data mode switches to `real` automatically and the synthetic badge disappears.
 
